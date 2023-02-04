@@ -2,7 +2,13 @@ import { Button, Box } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import "./Login.module.scss";
 
-export default function Login({ firebase, auth }: any) {
+export default function Login({
+  firebase,
+  auth,
+}: {
+  firebase: any;
+  auth: any;
+}) {
   function googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
