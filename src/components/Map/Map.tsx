@@ -1,66 +1,65 @@
-// Note: This example requires that you consent to location sharing when
-// prompted by your browser. If you see the error "The Geolocation service
-// failed.", it means you probably did not give permission for the browser to
-// locate you.
-let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
+import React from "react";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
-function initMap(): void {
-  map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 6,
-  });
-  infoWindow = new google.maps.InfoWindow();
+const containerStyle = {
+  width: "400px",
+  height: "400px",
+};
 
-  const locationButton = document.createElement("button");
+const center = {
+  lat: 45.50494426490774,
+  lng: -73.61323674672776,
+};
 
-  locationButton.textContent = "Pan to Current Location";
-  locationButton.classList.add("custom-map-control-button");
-
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-
-  locationButton.addEventListener("click", () => {
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-
-          infoWindow.setPosition(pos);
-          infoWindow.setContent("Location found.");
-          infoWindow.open(map);
-          map.setCenter(pos);
-        },
-        () => {
-          handleLocationError(true, infoWindow, map.getCenter()!);
-        }
-      );
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter()!);
-    }
+function getCurrentPosition() {
+  console.log("ur mom");
+  let latitude;
+  let longitude;
+  navigator.geolocation.getCurrentPosition((position) => {
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    console.log("latitude: ", latitude);
+    console.log("longitude: ", longitude);
+    // Show a map centered at latitude / longitude.
   });
 }
 
-function handleLocationError(
-  browserHasGeolocation: boolean,
-  infoWindow: google.maps.InfoWindow,
-  pos: google.maps.LatLng
-) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(
-    browserHasGeolocation
-      ? "Error: The Geolocation service failed."
-      : "Error: Your browser doesn't support geolocation."
+function Map() {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyAwuB2MmYz2O8BLRyNH7wae45H_4AXLYhE",
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map: any) {
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map);
+    console.log("hello");
+    getCurrentPosition();
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map: any) {
+    setMap(null);
+  }, []);
+
+  return isLoaded ? (
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={10}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+    >
+      {/* Child components, such as markers, info windows, etc. */}
+      <></>
+    </GoogleMap>
+  ) : (
+    <></>
   );
-  infoWindow.open(map);
 }
 
-declare global {
-  interface Window {
-    initMap: () => void;
-  }
-}
-window.initMap = initMap;
+export default React.memo(Map);
