@@ -1,4 +1,62 @@
 .sidebar_container {
-  border: 1px solid blue;
+  // border: 1px solid blue;
   width: 30vw;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.header_container{
+  background-color: #A2D2FF;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 0px 5px
+}
+
+.logo_img{
+  background-color: #A2D2FF;
+  border: none;
+}
+
+.app_name{
+  color: white;
+  margin-left: 5px;
+  font-weight: bold;
+  font-family: "Trebuchet MS"
+}
+.sidebar_body{
+  padding: 5px
+}
+
+.sidebar_sort{
+  padding: 10px
+}
+
+.sidebar_section_title{
+  display: flex;
+  align-items: center;
+  padding: 2px 2px 5px 5px;
+}
+
+.filter_option{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px
+}
+
+.option_divider{
+  padding: 0 5px
+}
+
+.title_divider{
+  border-bottom-width: 3;
+}
+
+.sidebar_section_title_text{
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+.divider_container{
+  width: 100%;
+  padding: 3px 10px;
 }
