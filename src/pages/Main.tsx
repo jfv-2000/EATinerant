@@ -21,7 +21,6 @@ export default function Map({
   const [addLocationPopup, setAddLocationPopup] = useState(true);
   const [lat, setLat] = useState(0.0);
   const [long, setLong] = useState(0.0);
-
   return (
     auth.currentUser && (
       <Box
@@ -33,7 +32,7 @@ export default function Map({
           display: "flex",
         }}
       >
-        <Sidebar auth={auth} />
+        <Sidebar locations={locations} auth={auth} />
         <Box>
           <p>{locations?.length} locations in the db</p>
           <AddForm
