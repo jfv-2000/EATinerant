@@ -14,9 +14,15 @@ import Logo from "../../assets/logo.png";
 import { RiFilter2Fill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 
-export default function Sidebar({ locations, auth }: { locations: any, auth: any }) {
+export default function Sidebar({ locations, auth, updateFilters }: { locations: any, auth: any, updateFilters: (filters: any) => void }) {
   const [filters, setFilters] = useState({ itinerant: true, foodBank: true, shelter: false, needsHygiene: false, hasPet: true })
-  console.log(locations)
+
+  function handleFilterChange(e: any, field: string) {
+    const updatedFilters = { ...filters, [field]: e.target.checked }
+    setFilters(updatedFilters)
+    updateFilters(updatedFilters);
+  }
+
   return <Box className="sidebar_container">
     <Box className="header_container">
       <Image src={Logo} alt="Logo" className="logo_img" boxSize="50px" />
@@ -33,35 +39,35 @@ export default function Sidebar({ locations, auth }: { locations: any, auth: any
         <Divider className="title_divider" sx={{ borderBottomWidth: 1.25, borderBottomColor: "#6e6e6e" }} />
         <Box className="filter_option">
           <Text>Itinerant</Text>
-          <Checkbox isChecked={filters.itinerant} />
+          <Checkbox isChecked={filters.itinerant} onChange={(e) => handleFilterChange(e, "itinerant")} />
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />
         </Box>
         <Box className="filter_option">
           <Text>Food Bank</Text>
-          <Checkbox isChecked={filters.foodBank} />
+          <Checkbox isChecked={filters.foodBank} onChange={(e) => handleFilterChange(e, "foodBank")} />
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />
         </Box>
         <Box className="filter_option">
           <Text>Shelter</Text>
-          <Checkbox isChecked={filters.shelter} />
+          <Checkbox isChecked={filters.shelter} onChange={(e) => handleFilterChange(e, "shelter")} />
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />
         </Box>
         <Box className="filter_option">
           <Text>Needs hygiene products</Text>
-          <Checkbox isChecked={filters.needsHygiene} />
+          <Checkbox isChecked={filters.needsHygiene} onChange={(e) => handleFilterChange(e, "needsHygiene")} />
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />
         </Box>
         <Box className="filter_option">
           <Text>Has a pet</Text>
-          <Checkbox isChecked={filters.hasPet} />
+          <Checkbox isChecked={filters.hasPet} onChange={(e) => handleFilterChange(e, "hasPet")} />
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />

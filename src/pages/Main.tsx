@@ -21,6 +21,10 @@ export default function Map({
   const [addLocationPopup, setAddLocationPopup] = useState(true);
   const [lat, setLat] = useState(0.0);
   const [long, setLong] = useState(0.0);
+
+  function updateFilters(filters: any) {
+    console.log(filters)
+  }
   return (
     auth.currentUser && (
       <Box
@@ -32,7 +36,7 @@ export default function Map({
           display: "flex",
         }}
       >
-        <Sidebar locations={locations} auth={auth} />
+        <Sidebar locations={locations} auth={auth} updateFilters={(filters) => updateFilters(filters)} />
         <Box>
           <p>{locations?.length} locations in the db</p>
           <AddForm
