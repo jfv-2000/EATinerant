@@ -1,15 +1,27 @@
 import { Button, Box } from "@chakra-ui/react";
-import { GeoPoint } from "firebase/firestore";
-import { useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import CustomMap from "../components/Map/Map";
-import AddForm from "../components/AddForm";
+import AddForm from "../components/AddForm/AddForm";
 import Sidebar from "../components/Sidebar/Sidebar";
+import { useState } from "react";
+import ViewLocation from "../components/ViewLocation/ViewLocation";
 
-export default function Map({ firebase, firestore, auth }: any) {
+export default function Map({
+  firebase,
+  firestore,
+  auth,
+}: {
+  firebase: any;
+  firestore: any;
+  auth: any;
+}) {
   const locationsCollection = firestore.collection("locations");
   const query = locationsCollection.limit(25);
   const [locations] = useCollectionData(query);
+  const [addLocationPopup, setAddLocationPopup] = useState(true);
+  const [lat, setLat] = useState(0.0);
+  const [long, setLong] = useState(0.0);
+  console.log(locations);
 
   return (
     auth.currentUser && (
@@ -25,7 +37,18 @@ export default function Map({ firebase, firestore, auth }: any) {
         <Sidebar />
         <Box>
           <p>{locations?.length} locations in the db</p>
-          <AddForm firestore={firestore} firebase={firebase} auth={auth} />
+          {addLocationPopup ? (
+            <AddForm
+              firestore={firestore}
+              firebase={firebase}
+              auth={auth}
+              lat={lat}
+              long={long}
+              setAddLocationPopup={setAddLocationPopup}
+            />
+          ) : (
+            locations && <ViewLocation {...locations[5]} />
+          )}
           <CustomMap />
         </Box>
       </Box>

@@ -1,46 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: "400px",
-  height: "400px",
+  width: "800px",
+  height: "600px",
 };
 
-const center = {
-  lat: 45.50494426490774,
-  lng: -73.61323674672776,
+const defaultCenter = {
+  lat: 45.508888,
+  lng: -73.561668,
 };
 
 function getCurrentPosition() {
-  console.log("ur mom");
-  let latitude;
-  let longitude;
-  navigator.geolocation.getCurrentPosition((position) => {
-    latitude = position.coords.latitude;
-    longitude = position.coords.longitude;
-    console.log("latitude: ", latitude);
-    console.log("longitude: ", longitude);
-    // Show a map centered at latitude / longitude.
-  });
+  console.log("kkkk ssss");
 }
 
 function Map() {
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map: any) {
+    setMap(map);
+  }, []);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyAwuB2MmYz2O8BLRyNH7wae45H_4AXLYhE",
   });
-
-  const [map, setMap] = React.useState(null);
-
-  const onLoad = React.useCallback(function callback(map: any) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    setMap(map);
-    console.log("hello");
-    getCurrentPosition();
-  }, []);
 
   const onUnmount = React.useCallback(function callback(map: any) {
     setMap(null);
@@ -49,9 +34,10 @@ function Map() {
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={center}
-      zoom={10}
+      center={defaultCenter}
+      zoom={13}
       onLoad={onLoad}
+      options={{ streetViewControl: false }}
       onUnmount={onUnmount}
     >
       {/* Child components, such as markers, info windows, etc. */}
