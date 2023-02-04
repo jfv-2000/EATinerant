@@ -1,4 +1,4 @@
-.view_container *:not(.close, .close *) {
+.view_container *:not(.close, .close *, .map) {
   cursor: initial !important;
 }
 
