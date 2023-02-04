@@ -8,6 +8,7 @@ import {
   Checkbox,
   Box,
   Text,
+  Button,
 } from "@chakra-ui/react";
 import { FcCheckmark } from "react-icons/fc";
 import { GrClose } from "react-icons/gr";
@@ -25,11 +26,15 @@ export default function ViewLocation({
   lastDelivery,
   needsHygiene,
   sexe,
+  name,
+  link,
 }: Location) {
   return (
     <Box className="view_container">
       <Box className="header">
-        <Heading size="md">Person Spotting</Heading>
+        <Heading size="md">
+          {name && !isPerson ? name : "Person Spotting"}
+        </Heading>
         <IconButton
           className="close"
           size="xs"
@@ -58,6 +63,25 @@ export default function ViewLocation({
         <Text fontSize={fontSize}>Female Hygiene Products</Text>
         {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
       </Box>
+      <Button
+        className="map"
+        size="xs"
+        colorScheme="blue"
+        sx={{
+          alignSelf: "flex-end",
+          marginTop: "10px",
+        }}
+        onClick={() =>
+          window.open(
+            link
+              ? link
+              : `http://maps.google.com?q=${coordinates._lat},${coordinates._long}`,
+            "_blank"
+          )
+        }
+      >
+        View in Maps
+      </Button>
     </Box>
   );
 }

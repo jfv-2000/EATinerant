@@ -44,7 +44,7 @@ export default function Map({
             long={long}
             setAddLocationPopup={setAddLocationPopup}
           />
-          {locations && <ViewLocation {...locations[5]} />}
+          {locations && <ViewLocation {...locations[6]} />}
           <CustomMap />
         </Box>
       </Box>

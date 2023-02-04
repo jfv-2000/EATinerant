@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { IconButton } from "@chakra-ui/react";
+import { IoMdLocate } from "react-icons/io";
 
 const containerStyle = {
   width: "800px",
@@ -16,6 +18,61 @@ function Map() {
   const [center, setCenter] = useState(defaultCenter);
 
   const onLoad = React.useCallback(function callback(map: any) {
+    const customStyle = [
+      {
+        featureType: "administrative",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "administrative.land_parcel",
+        elementType: "labels",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "poi",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "road",
+        elementType: "labels.icon",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "road.local",
+        elementType: "labels",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+      {
+        featureType: "transit",
+        stylers: [
+          {
+            visibility: "off",
+          },
+        ],
+      },
+    ];
+    map.set("styles", customStyle);
     setMap(map);
   }, []);
 
@@ -33,7 +90,6 @@ function Map() {
       });
     } else {
       alert("Please allow use of geo-location in your browser settings.");
-      return;
     }
   }
 
@@ -57,8 +113,14 @@ function Map() {
         onUnmount={onUnmount}
       >
         {/* Child components, such as markers, info windows, etc. */}
+        <IconButton
+          aria-label="locate me"
+          colorScheme={"blue"}
+          onClick={getCurrentPosition}
+        >
+          <IoMdLocate size={26} />
+        </IconButton>
       </GoogleMap>
-      <button onClick={getCurrentPosition}>KINKY KELVIN SUSSY SERGE</button>
     </>
   ) : (
     <></>

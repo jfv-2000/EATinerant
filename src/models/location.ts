@@ -6,4 +6,6 @@ export interface Location {
   lastDelivery?: { seconds: number; nanonumseconds: number };
   sexe?: string;
   needsHygiene?: boolean;
+  name?: string;
+  link?: string;
 }
