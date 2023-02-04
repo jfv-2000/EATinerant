@@ -15,38 +15,51 @@ export default function Login({
   }
 
   return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-
-        <Box className="login_pg_contents">
-          <Box className="logo_box">
-            <Flex>
-              <Logo size={150}></Logo>
-              <Heading color={"#3182CE"} className="title" as={"h1"} size={"4xl"} margin={10}>EATinerant</Heading>
-            </Flex>
-          </Box>
-
-            <Box className="login_box" justifyContent={"center"} alignContent="center" display={"flex"}>
-              <Button
-                className="login_button"
-                variant="solid"
-                onClick={googleLogin}
-                colorScheme="blue"
-                backgroundColor="white"
-                color="#0f83f5"
-                sx={{ border: "#0f83f5 1px solid" }}
-                rightIcon={<FcGoogle />}
-                >
-                  Log In
-              </Button>
-            </Box>
-          </Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <Box className="login_pg_contents">
+        <Box className="logo_box">
+          <Flex>
+            <Logo size={150}></Logo>
+            <Heading
+              color={"#3182CE"}
+              className="title"
+              as={"h1"}
+              size={"4xl"}
+              margin={10}
+            >
+              EATinerant
+            </Heading>
+          </Flex>
         </Box>
+
+        <Box
+          className="login_box"
+          justifyContent={"center"}
+          alignContent="center"
+          display={"flex"}
+        >
+          <Button
+            className="login_button"
+            variant="solid"
+            onClick={googleLogin}
+            colorScheme="blue"
+            backgroundColor="white"
+            color="#0f83f5"
+            sx={{ border: "#0f83f5 1px solid" }}
+            _hover={{ color: "white", backgroundColor: "blue.500" }}
+            rightIcon={<FcGoogle />}
+          >
+            Log In
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }

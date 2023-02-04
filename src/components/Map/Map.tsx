@@ -27,6 +27,8 @@ function Map() {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
+        console.log("nani");
+        console.log("currentLocation: ", currentLocation);
         setCenter(currentLocation);
       });
     } else {

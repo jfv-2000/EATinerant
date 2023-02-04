@@ -16,7 +16,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import "./ViewLocation.scss";
 
 const fontSize = "sm";
-const radioSize = "sm";
 
 export default function ViewLocation({
   coordinates,

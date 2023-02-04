@@ -1,13 +1,20 @@
 import {
-  Box, Checkbox, Divider, Image, Select, Switch, Text
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  Image,
+  Select,
+  Switch,
+  Text,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import "./Sidebar.scss";
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo.png";
 import { RiFilter2Fill } from "react-icons/ri";
-import { DocumentData } from "firebase/firestore";
+import { FcGoogle } from "react-icons/fc";
 
-export default function Sidebar(locations: any) {
+export default function Sidebar({ locations, auth }: { locations: any, auth: any }) {
   const [filters, setFilters] = useState({ itinerant: true, foodBank: true, shelter: false, needsHygiene: false, hasPet: true })
   console.log(locations)
   return <Box className="sidebar_container">
@@ -61,5 +68,18 @@ export default function Sidebar(locations: any) {
         </Box>
       </Box>
     </Box>
+    <Button
+      className="login_button"
+      variant="solid"
+      onClick={() => auth.signOut()}
+      colorScheme="blue"
+      backgroundColor="white"
+      color="#0f83f5"
+      sx={{ border: "#0f83f5 1px solid", borderRadius: "0px" }}
+      _hover={{ color: "white", backgroundColor: "blue.500" }}
+      rightIcon={<FcGoogle />}
+    >
+      Log Out
+    </Button>
   </Box>
 }
