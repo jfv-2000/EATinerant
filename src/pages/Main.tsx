@@ -21,7 +21,6 @@ export default function Map({
   const [addLocationPopup, setAddLocationPopup] = useState(true);
   const [lat, setLat] = useState(0.0);
   const [long, setLong] = useState(0.0);
-  console.log(locations);
 
   return (
     auth.currentUser && (
@@ -37,18 +36,15 @@ export default function Map({
         <Sidebar />
         <Box>
           <p>{locations?.length} locations in the db</p>
-          {addLocationPopup ? (
-            <AddForm
-              firestore={firestore}
-              firebase={firebase}
-              auth={auth}
-              lat={lat}
-              long={long}
-              setAddLocationPopup={setAddLocationPopup}
-            />
-          ) : (
-            locations && <ViewLocation {...locations[5]} />
-          )}
+          <AddForm
+            firestore={firestore}
+            firebase={firebase}
+            auth={auth}
+            lat={lat}
+            long={long}
+            setAddLocationPopup={setAddLocationPopup}
+          />
+          {locations && <ViewLocation {...locations[5]} />}
           <CustomMap />
         </Box>
       </Box>

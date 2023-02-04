@@ -54,7 +54,7 @@ export default function AddForm({
   };
 
   return (
-    <Box className="container">
+    <Box className="add_container">
       <Box className="header">
         <Heading size="md">Add Person Spotting</Heading>
         <IconButton

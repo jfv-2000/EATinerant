@@ -1,20 +1,24 @@
-.add_container {
+.view_container *:not(.close, .close *) {
+  cursor: initial !important;
+}
+
+.view_container {
   padding: 20px;
   border: 1px solid black;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   width: 350px;
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
   .row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 7px 0;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
   }
 }

@@ -11,16 +11,29 @@ const defaultCenter = {
   lng: -73.561668,
 };
 
-function getCurrentPosition() {
-  console.log("kkkk ssss");
-}
-
 function Map() {
   const [map, setMap] = React.useState(null);
+  const [center, setCenter] = useState(defaultCenter);
 
   const onLoad = React.useCallback(function callback(map: any) {
     setMap(map);
   }, []);
+
+  function getCurrentPosition() {
+    console.log("kkkk ssss");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let currentLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        setCenter(currentLocation);
+      });
+    } else {
+      alert("Please allow use of geo-location in your browser settings.");
+      return;
+    }
+  }
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -32,17 +45,19 @@ function Map() {
   }, []);
 
   return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={defaultCenter}
-      zoom={13}
-      onLoad={onLoad}
-      options={{ streetViewControl: false }}
-      onUnmount={onUnmount}
-    >
-      {/* Child components, such as markers, info windows, etc. */}
-      <></>
-    </GoogleMap>
+    <>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={13}
+        onLoad={onLoad}
+        options={{ streetViewControl: false }}
+        onUnmount={onUnmount}
+      >
+        {/* Child components, such as markers, info windows, etc. */}
+      </GoogleMap>
+      <button onClick={getCurrentPosition}>KINKY KELVIN SUSSY SERGE</button>
+    </>
   ) : (
     <></>
   );

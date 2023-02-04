@@ -9,8 +9,11 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
+import { FcCheckmark } from "react-icons/fc";
 import { GrClose } from "react-icons/gr";
 import { Location } from "../../models/Location";
+import { AiOutlineClose } from "react-icons/ai";
+import "./ViewLocation.scss";
 
 const fontSize = "sm";
 const radioSize = "sm";
@@ -24,20 +27,16 @@ export default function ViewLocation({
   needsHygiene,
   sexe,
 }: Location) {
-  console.log(
-    coordinates,
-    createdAt,
-    hasPet,
-    isPerson,
-    lastDelivery,
-    needsHygiene,
-    sexe
-  );
   return (
-    <Box className="container">
+    <Box className="view_container">
       <Box className="header">
         <Heading size="md">Person Spotting</Heading>
-        <IconButton size="xs" aria-label="Close Modal" icon={<GrClose />} />
+        <IconButton
+          className="close"
+          size="xs"
+          aria-label="Close Modal"
+          icon={<GrClose />}
+        />
       </Box>
       <Divider />
       <Box className="row">
@@ -48,27 +47,17 @@ export default function ViewLocation({
       </Box>
       <Box className="row">
         <Text fontSize={fontSize}>Sexe</Text>
-        <RadioGroup value={sexe}>
-          <Stack direction="row">
-            <Radio size={radioSize} value="M">
-              Male
-            </Radio>
-            <Radio size={radioSize} value="F">
-              Female
-            </Radio>
-            <Radio size={radioSize} value="A">
-              Other
-            </Radio>
-          </Stack>
-        </RadioGroup>
+        <Text fontSize={fontSize}>
+          {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Unknown"}
+        </Text>
       </Box>
       <Box className="row">
         <Text fontSize={fontSize}>Pet</Text>
-        <Checkbox disabled isChecked={hasPet} />
+        {hasPet ? <FcCheckmark /> : <AiOutlineClose color="red" />}
       </Box>
       <Box className="row">
         <Text fontSize={fontSize}>Female Hygiene Products</Text>
-        <Checkbox disabled isChecked={needsHygiene} />
+        {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
       </Box>
     </Box>
   );
