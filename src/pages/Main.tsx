@@ -33,7 +33,7 @@ export default function Map({
           display: "flex",
         }}
       >
-        <Sidebar />
+        <Sidebar auth={auth} />
         <Box>
           <p>{locations?.length} locations in the db</p>
           <AddForm
