@@ -3,7 +3,7 @@ import {
   GoogleMap,
   InfoWindow,
   Marker,
-  useJsApiLoader,
+  useJsApiLoader
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
@@ -23,6 +23,7 @@ const defaultCenter = {
   lat: 45.508888,
   lng: -73.561668,
 };
+
 const DEFAULT_ZOOM = 13;
 
 export default function Map({
