@@ -119,7 +119,6 @@ function Map() {
         options={{ streetViewControl: false }}
         onUnmount={onUnmount}
         onDrag={() => setShowLocationMarker(false)}
-        onZoomChanged={() => {setZoom(map.getZoom()); console.log(zoom)}}
       >
         { showlocationMarker ? <CustomMarker position={center} icon={""}></CustomMarker> : <></> }
         <IconButton
