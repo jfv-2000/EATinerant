@@ -1,10 +1,11 @@
 import { Box, Button, Divider, Image, Select, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import "./Sidebar.scss";
-import Logo from "../../assets/logo.png";
-import { RiFilter2Fill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-import { initialFilters } from "../../assets/constants"
+import { RiFilter2Fill } from "react-icons/ri";
+import { initialFilters } from "../../assets/constants";
+import Logo from "../../assets/logo.png";
+import "./Sidebar.scss";
+
 export default function Sidebar({
   auth,
   updateFilters,
@@ -24,7 +25,7 @@ export default function Sidebar({
     <Box className="sidebar_container">
       <Box className="header_container">
         <Image src={Logo} alt="Logo" className="logo_img" boxSize="50px" />
-        <Text className="app_name" fontSize="3xl">
+        <Text className="app_name" fontSize="3xl" textShadow={"1px 1px #7BA0C2"}>
           EATinérant
         </Text>
       </Box>
@@ -35,13 +36,15 @@ export default function Sidebar({
             Filters
           </Text>
         </Box>
-        <Divider
-          className="title_divider"
-          sx={{ borderBottomWidth: 1.25, borderBottomColor: "#6e6e6e" }}
-        />
+        <Box className="title_divider">
+          <Divider
+            sx={{ borderBottomWidth: 1.25, borderBottomColor: "#6e6e6e" }}
+          />
+        </Box>
         <Box className="dropdown_option">
           <Text>Type</Text>
           <Select
+            variant='unstyled'
             defaultValue={filters.type}
             w="100px"
             size="sm"
@@ -56,11 +59,30 @@ export default function Sidebar({
           <Divider className="option_divider" />
         </Box>
         <Box className="dropdown_option">
+          <Text>Gender</Text>
+          <Select
+            w="100px"
+            variant='unstyled'
+            disabled={filters.type === "foodBank"}
+            defaultValue={filters.gender}
+            size="sm"
+            onChange={(e) => handleFilterChange(e, "gender")}
+          >
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </Select>
+        </Box>
+        <Box className="divider_container">
+          <Divider className="option_divider" />
+        </Box>
+        <Box className="dropdown_option">
           <Text>Needs hygiene products</Text>
           <Select
+            variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.needsHygiene}
-            w="65px"
+            w="100px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "needsHygiene")}
           >
@@ -75,9 +97,10 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Has a pet</Text>
           <Select
+            variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.pet}
-            w="65"
+            w="100px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "pet")}
           >
@@ -90,11 +113,12 @@ export default function Sidebar({
           <Divider className="option_divider" />
         </Box>
         <Box className="dropdown_option">
-          <Text>Last fed</Text>
+          <Text>Last delivered</Text>
           <Select
+            w="100px"
+            variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.lastFed}
-            w="65px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "lastFed")}
           >

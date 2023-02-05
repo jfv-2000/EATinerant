@@ -3,4 +3,5 @@ export const initialFilters = {
     needsHygiene: "all",
     pet: "all",
     lastFed: "all",
+    gender: "all"
 }

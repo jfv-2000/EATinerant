@@ -25,9 +25,15 @@ export default function Map({
   function updateFilters(filters: any) {
     const updatedPins: any = [];
     locations?.map((pin) => {
-      if (!pin.isPerson && (filters.type === "foodBank" || filters.type === "all")) {
+      if (
+        !pin.isPerson &&
+        (filters.type === "foodBank" || filters.type === "all")
+      ) {
         updatedPins.push(pin);
-      } else if (pin.isPerson && (filters.type === "itinerant" || filters.type === "all")) {
+      } else if (
+        pin.isPerson &&
+        (filters.type === "itinerant" || filters.type === "all")
+      ) {
         if (
           filters.pet === "all" ||
           (filters.pet === "yes" && pin.hasPet) ||
@@ -41,14 +47,17 @@ export default function Map({
             const lastDelivery = new Date(0);
             lastDelivery.setUTCSeconds(pin.lastDelivery?.seconds);
             const lastFedHourDifference =
-              new Date().getHours() - (pin.lastDelivery ? lastDelivery.getHours() : 0);
+              new Date().getHours() -
+              (pin.lastDelivery ? lastDelivery.getHours() : 0);
             if (
               filters.lastFed === "all" ||
               (filters.lastFed === "twelve" && lastFedHourDifference > 12) ||
               (filters.lastFed === "eight" && lastFedHourDifference > 8) ||
               (filters.lastFed === "four" && lastFedHourDifference > 4)
             ) {
-              updatedPins.push(pin);
+              if (filters.gender === "all" || (filters.gender === "male" && pin.sexe === "M") || (filters.gender === "female" && pin.sexe === "F")) {
+                updatedPins.push(pin);
+              }
             }
           }
         }

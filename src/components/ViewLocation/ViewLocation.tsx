@@ -31,6 +31,7 @@ export default function ViewLocation({
   firebase,
   firestore,
   setPopup,
+  id,
 }: {
   firebase: any;
   firestore: any;
@@ -39,33 +40,23 @@ export default function ViewLocation({
   const locationsCollection = firestore.collection("locations");
 
   const noLongerHere = async (e: any) => {
-    // e.preventDefault();
-    // await locationsCollection.add({
-    //   coordinates: new GeoPoint(lat, lng),
-    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    //   hasPet,
-    //   sexe,
-    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
-    //   isPerson: true,
-    //   needsHygiene,
-    //   id: uuidv4(),
-    // });
-    // setPopup();
+    e.preventDefault();
+    const toDelete = await locationsCollection.where("id", "==", id).get();
+    toDelete.forEach((location: any) => {
+      location.ref.delete();
+    });
+    setPopup();
   };
 
   const justDelivered = async (e: any) => {
-    // e.preventDefault();
-    // await locationsCollection.add({
-    //   coordinates: new GeoPoint(lat, lng),
-    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    //   hasPet,
-    //   sexe,
-    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
-    //   isPerson: true,
-    //   needsHygiene,
-    //   id: uuidv4(),
-    // });
-    // setPopup();
+    e.preventDefault();
+    const toUpdate = await locationsCollection.where("id", "==", id).get();
+    toUpdate.forEach((location: any) => {
+      location.ref.update({
+        lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    });
+    setPopup();
   };
 
   return (
@@ -74,42 +65,45 @@ export default function ViewLocation({
         {name && !isPerson ? name : "Person Spotted"}
       </Heading>
       <Divider />
-      <Box className="row">
-        <Text fontSize={fontSize}>Pinned Location</Text>
-        <Text fontSize={fontSize} sx={{ textAlign: "end" }}>
-          {coordinates._lat}° N, {coordinates._long}° E
-        </Text>
+      <Box className="content">
+        <Box className="row">
+          <Text fontSize={fontSize}>Pinned Location</Text>
+          <Text fontSize={fontSize} sx={{ textAlign: "end" }}>
+            {coordinates._lat}° N, {coordinates._long}° E
+          </Text>
+        </Box>
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Sexe</Text>
+            <Text fontSize={fontSize}>
+              {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Other"}
+            </Text>
+          </Box>
+        )}
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Pet</Text>
+            {hasPet ? <FcCheckmark /> : <AiOutlineClose color="red" />}
+          </Box>
+        )}
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Female Hygiene Products</Text>
+            {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
+          </Box>
+        )}
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Last Delivery</Text>
+            <Text fontSize={fontSize}>
+              {lastDelivery
+                ? new Date(lastDelivery?.seconds * 1000).toLocaleString()
+                : "Never"}
+            </Text>
+          </Box>
+        )}
       </Box>
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Sexe</Text>
-          <Text fontSize={fontSize}>
-            {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Other"}
-          </Text>
-        </Box>
-      )}
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Pet</Text>
-          {hasPet ? <FcCheckmark /> : <AiOutlineClose color="red" />}
-        </Box>
-      )}
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Female Hygiene Products</Text>
-          {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
-        </Box>
-      )}
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Last Delivery</Text>
-          <Text fontSize={fontSize}>
-            {lastDelivery
-              ? new Date(lastDelivery?.seconds * 1000).toLocaleString()
-              : "Never"}
-          </Text>
-        </Box>
-      )}
+
       <Box className="buttons_list">
         {isPerson && (
           <Button

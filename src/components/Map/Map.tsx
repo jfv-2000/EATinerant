@@ -3,7 +3,7 @@ import {
   GoogleMap,
   InfoWindow,
   Marker,
-  useJsApiLoader,
+  useJsApiLoader
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
@@ -11,6 +11,7 @@ import { mapStyle } from "../../MapStyling";
 import AddForm from "../AddForm/AddForm";
 import ViewLocation from "../ViewLocation/ViewLocation";
 import CustomMarker from "./CustomMarker";
+import { Location } from "../../models/location";
 import customShelter from "../../assets/tentIcon.svg";
 import manIcon from "../../assets/man.svg";
 import womanIcon from "../../assets/woman.svg";
@@ -25,6 +26,7 @@ const defaultCenter = {
   lat: 45.508888,
   lng: -73.561668,
 };
+
 const DEFAULT_ZOOM = 13;
 
 export default function Map({

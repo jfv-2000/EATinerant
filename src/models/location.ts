@@ -8,4 +8,5 @@ export interface Location {
   needsHygiene?: boolean;
   name?: string;
   link?: string;
+  id: string;
 }
