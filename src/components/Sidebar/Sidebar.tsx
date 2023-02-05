@@ -6,7 +6,7 @@ import {
   Image,
   Select,
   Text,
-  useBreakpointValue,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
@@ -44,7 +44,7 @@ export default function Sidebar({
       className="sidebar_container"
       sx={{ width: isMobile ? "100%" : "38vw", height: "100%" }}
     >
-      <Box className="header_container">
+      <Box className="header_container" boxShadow={"base"}>
         <Box className="header">
           <Image src={Logo} alt="Logo" className="logo_img" boxSize="50px" />
           <Text
@@ -64,7 +64,7 @@ export default function Sidebar({
           />
         )}
       </Box>
-      <Box className="sidebar_section">
+      <Box className="sidebar_section" boxShadow={"lg"}>
         <Box className="sidebar_section_title">
           <RiFilter2Fill />
           <Text fontSize="md" className="sidebar_section_title_text">

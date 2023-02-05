@@ -1,15 +1,9 @@
 import {
   Box,
-  Button,
   Drawer,
-  DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   IconButton,
-  Input,
   useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -34,6 +28,7 @@ export default function Map({
   const [pins, setPins] = useState(locations);
   const isMobile = useBreakpointValue({
     base: true,
+    sm: true,
     md: false,
     lg: false,
     xl: false,
@@ -74,10 +69,12 @@ export default function Map({
               (filters.lastFed === "eight" && lastFedHourDifference > 8) ||
               (filters.lastFed === "four" && lastFedHourDifference > 4)
             ) {
-              if (filters.gender === "all" ||
+              if (
+                filters.gender === "all" ||
                 (filters.gender === "male" && pin.sexe === "M") ||
                 (filters.gender === "female" && pin.sexe === "F") ||
-                (filters.gender === "other" && pin.sexe === "A")) {
+                (filters.gender === "other" && pin.sexe === "A")
+              ) {
                 updatedPins.push(pin);
               }
             }
@@ -95,19 +92,14 @@ export default function Map({
           display: "flex",
         }}
       >
-        {!isMobile ? (
-          <Sidebar
-            auth={auth}
-            updateFilters={(filters) => updateFilters(filters)}
-          />
-        ) : (
+        {isMobile ? (
           <>
             <IconButton
               sx={{
                 position: "absolute",
-                zIndex: 10,
-                top: "90vh",
-                left: "5vw",
+                zIndex: 100,
+                bottom: "130px",
+                left: "10px",
               }}
               colorScheme="blue"
               aria-label="Search database"
@@ -131,6 +123,11 @@ export default function Map({
               </DrawerContent>
             </Drawer>
           </>
+        ) : (
+          <Sidebar
+            auth={auth}
+            updateFilters={(filters) => updateFilters(filters)}
+          />
         )}
         <CustomMap locations={pins} firebase={firebase} firestore={firestore} />
       </Box>
