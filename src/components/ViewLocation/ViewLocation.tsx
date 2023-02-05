@@ -30,16 +30,44 @@ export default function ViewLocation({
   link,
   firebase,
   firestore,
+  setPopup,
 }: {
   firebase: any;
   firestore: any;
+  setPopup: () => void;
 } & Location) {
   const locationsCollection = firestore.collection("locations");
 
-  //firestore.where("name", "==", bookName).get()
-  // .then(querySnapshot => {
-  //     querySnapshot.docs[0].ref.delete();
-  // });
+  const noLongerHere = async (e: any) => {
+    // e.preventDefault();
+    // await locationsCollection.add({
+    //   coordinates: new GeoPoint(lat, lng),
+    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //   hasPet,
+    //   sexe,
+    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
+    //   isPerson: true,
+    //   needsHygiene,
+    //   id: uuidv4(),
+    // });
+    // setPopup();
+  };
+
+  const justDelivered = async (e: any) => {
+    // e.preventDefault();
+    // await locationsCollection.add({
+    //   coordinates: new GeoPoint(lat, lng),
+    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //   hasPet,
+    //   sexe,
+    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
+    //   isPerson: true,
+    //   needsHygiene,
+    //   id: uuidv4(),
+    // });
+    // setPopup();
+  };
+
   return (
     <Box className="view_container">
       <Heading size="md" className="header">
@@ -72,13 +100,23 @@ export default function ViewLocation({
           {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
         </Box>
       )}
+      {isPerson && (
+        <Box className="row">
+          <Text fontSize={fontSize}>Last Delivery</Text>
+          <Text fontSize={fontSize}>
+            {lastDelivery
+              ? new Date(lastDelivery?.seconds * 1000).toLocaleString()
+              : "Never"}
+          </Text>
+        </Box>
+      )}
       <Box className="buttons_list">
         {isPerson && (
           <Button
             {...button_props}
             colorScheme="blue"
             rightIcon={<CiDeliveryTruck />}
-            onClick={() => {}}
+            onClick={justDelivered}
           >
             Just delivered
           </Button>
@@ -104,7 +142,7 @@ export default function ViewLocation({
             {...button_props}
             colorScheme="red"
             rightIcon={<GiInvisible />}
-            onClick={() => {}}
+            onClick={noLongerHere}
           >
             No Longer Here
           </Button>
