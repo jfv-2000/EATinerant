@@ -27,20 +27,26 @@ export default function Map({
     setPins(locations)
   }, [locations])
 
-  function updateFilters(filters: any, fieldUpdated: string) {
+  function updateFilters(filters: any) {
     const updatedPins: any = []
     locations?.map(pin => {
+
       if (pin.isPerson && filters.type === "itinerant") {
         if (filters.pet === "both" || filters.pet === "yes" && pin.hasPet || filters.pet === "no" && !pin.hasPet) {
-          console.log("has pet")
           if (filters.needsHygiene === "both" || filters.needsHygiene === "yes" && pin.needsHygiene || filters.needsHygiene === "no" && !pin.needsHygiene) {
-            updatedPins.push(pin)
+            const lastDelivery = new Date(0)
+            lastDelivery.setUTCSeconds(pin.lastDelivery.seconds)
+            const lastFedHourDifference = new Date().getHours() - lastDelivery.getHours();
+            if (filters.lastFed === "idc" || filters.lastFed === "twelve" && lastFedHourDifference > 12 || filters.lastFed === "eight" && lastFedHourDifference > 8 || filters.lastFed === "four" && lastFedHourDifference > 4) {
+              updatedPins.push(pin)
+            }
           }
         }
       } else if (!pin.isPerson && filters.type === "foodBank") {
         updatedPins.push(pin)
       }
     })
+    console.log(updatedPins)
     setPins(updatedPins)
   }
   return (
@@ -54,7 +60,7 @@ export default function Map({
           display: "flex",
         }}
       >
-        <Sidebar auth={auth} updateFilters={(filters, updatedField) => updateFilters(filters, updatedField)} />
+        <Sidebar auth={auth} updateFilters={(filters) => updateFilters(filters)} />
         <Box>
           <p>{locations?.length} locations in the db</p>
           <AddForm

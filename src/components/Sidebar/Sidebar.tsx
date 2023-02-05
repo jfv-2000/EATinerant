@@ -12,13 +12,13 @@ import Logo from "../../assets/logo.png";
 import { RiFilter2Fill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 
-export default function Sidebar({ auth, updateFilters }: { auth: any, updateFilters: (filters: any, fieldUpdated: string) => void }) {
-  const [filters, setFilters] = useState({ type: "itinerant", needsHygiene: "no", pet: "no" })
+export default function Sidebar({ auth, updateFilters }: { auth: any, updateFilters: (filters: any) => void }) {
+  const [filters, setFilters] = useState({ type: "itinerant", needsHygiene: "no", pet: "no", lastFed: "twelve" })
 
   function handleFilterChange(e: any, field: string) {
     const updatedFilters = { ...filters, [field]: e.target.value }
     setFilters(updatedFilters)
-    updateFilters(updatedFilters, field);
+    updateFilters(updatedFilters);
   }
 
   return <Box className="sidebar_container">
@@ -39,7 +39,7 @@ export default function Sidebar({ auth, updateFilters }: { auth: any, updateFilt
           <Text >
             Type
           </Text>
-          <Select defaultValue={filters.type} w="150px" size="sm" onChange={(e) => handleFilterChange(e, "type")}>
+          <Select defaultValue={filters.type} w="100px" size="sm" onChange={(e) => handleFilterChange(e, "type")}>
             <option value="itinerant">Itinerant</option>
             <option value="foodBank">Food Bank</option>
           </Select>
@@ -51,7 +51,7 @@ export default function Sidebar({ auth, updateFilters }: { auth: any, updateFilt
           <Text >
             Needs hygiene products
           </Text>
-          <Select disabled={filters.type === "foodBank"} defaultValue={filters.needsHygiene} w="150px" size="sm" onChange={(e) => handleFilterChange(e, "needsHygiene")}>
+          <Select disabled={filters.type === "foodBank"} defaultValue={filters.needsHygiene} w="115px" size="sm" onChange={(e) => handleFilterChange(e, "needsHygiene")}>
             <option value="yes">Yes</option>
             <option value="no">No</option>
             <option value="both">Doesn't matter</option>
@@ -64,10 +64,24 @@ export default function Sidebar({ auth, updateFilters }: { auth: any, updateFilt
           <Text >
             Has a pet
           </Text>
-          <Select disabled={filters.type === "foodBank"} defaultValue={filters.pet} w="150px" size="sm" onChange={(e) => handleFilterChange(e, "pet")}>
+          <Select disabled={filters.type === "foodBank"} defaultValue={filters.pet} w="115px" size="sm" onChange={(e) => handleFilterChange(e, "pet")}>
             <option value="yes">Yes</option>
             <option value="no">No</option>
             <option value="both">Doesn't matter</option>
+          </Select>
+        </Box>
+        <Box className="divider_container">
+          <Divider className="option_divider" />
+        </Box>
+        <Box className="dropdown_option">
+          <Text >
+            Last fed
+          </Text>
+          <Select disabled={filters.type === "foodBank"} defaultValue={filters.pet} w="100px" size="sm" onChange={(e) => handleFilterChange(e, "lastFed")}>
+            <option value="four">&gt; 4 hrs</option>
+            <option value="eight">&gt; 8 hrs</option>
+            <option value="twelve">&gt; 12 hrs</option>
+            <option value="idc">Doesn't matter</option>
           </Select>
         </Box>
         <Box className="divider_container">
