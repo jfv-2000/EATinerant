@@ -4,7 +4,7 @@ import "./Sidebar.scss";
 import Logo from "../../assets/logo.png";
 import { RiFilter2Fill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-
+import { initialFilters } from "../../assets/constants"
 export default function Sidebar({
   auth,
   updateFilters,
@@ -12,12 +12,7 @@ export default function Sidebar({
   auth: any;
   updateFilters: (filters: any) => void;
 }) {
-  const [filters, setFilters] = useState({
-    type: "itinerant",
-    needsHygiene: "no",
-    pet: "no",
-    lastFed: "idc",
-  });
+  const [filters, setFilters] = useState(initialFilters);
 
   function handleFilterChange(e: any, field: string) {
     const updatedFilters = { ...filters, [field]: e.target.value };
@@ -52,6 +47,7 @@ export default function Sidebar({
             size="sm"
             onChange={(e) => handleFilterChange(e, "type")}
           >
+            <option value="all">All</option>
             <option value="itinerant">Itinerant</option>
             <option value="foodBank">Food Bank</option>
           </Select>
