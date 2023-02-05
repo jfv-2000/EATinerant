@@ -6,9 +6,9 @@ import {
   Image,
   Select,
   Text,
-  useBreakpointValue
+  useBreakpointValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { RiFilter2Fill } from "react-icons/ri";
@@ -18,14 +18,23 @@ import "./Sidebar.scss";
 
 export default function Sidebar({
   auth,
-  updateFilters,
+  filters,
+  setFilters,
   closeFunction,
 }: {
   auth: any;
-  updateFilters: (filters: any) => void;
+  filters: any;
+  setFilters: Dispatch<
+    SetStateAction<{
+      type: string;
+      needsHygiene: string;
+      pet: string;
+      lastFed: string;
+      gender: string;
+    }>
+  >;
   closeFunction?: () => void;
 }) {
-  const [filters, setFilters] = useState(initialFilters);
   const isMobile = useBreakpointValue({
     base: true,
     md: false,
@@ -36,7 +45,6 @@ export default function Sidebar({
   function handleFilterChange(e: any, field: string) {
     const updatedFilters = { ...filters, [field]: e.target.value };
     setFilters(updatedFilters);
-    updateFilters(updatedFilters);
   }
 
   return (
@@ -79,7 +87,7 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Type</Text>
           <Select
-            variant='unstyled'
+            variant="unstyled"
             defaultValue={filters.type}
             w="115px"
             size="sm"
@@ -97,7 +105,7 @@ export default function Sidebar({
           <Text>Gender</Text>
           <Select
             w="115px"
-            variant='unstyled'
+            variant="unstyled"
             disabled={filters.type === "foodBank"}
             defaultValue={filters.gender}
             size="sm"
@@ -115,7 +123,7 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Needs hygiene products</Text>
           <Select
-            variant='unstyled'
+            variant="unstyled"
             disabled={filters.type === "foodBank"}
             defaultValue={filters.needsHygiene}
             w="115px"
@@ -133,7 +141,7 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Has a pet</Text>
           <Select
-            variant='unstyled'
+            variant="unstyled"
             disabled={filters.type === "foodBank"}
             defaultValue={filters.pet}
             w="115px"
@@ -152,7 +160,7 @@ export default function Sidebar({
           <Text>Last delivered</Text>
           <Select
             w="115px"
-            variant='unstyled'
+            variant="unstyled"
             disabled={filters.type === "foodBank"}
             defaultValue={filters.lastFed}
             size="sm"

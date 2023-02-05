@@ -12,6 +12,7 @@ import CustomMap from "../components/Map/Map";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useEffect, useState, useRef, useCallback, memo } from "react";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import { initialFilters } from "../assets/constants";
 
 function Map({
   firebase,
@@ -35,12 +36,9 @@ function Map({
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const [filters, setFilters] = useState(initialFilters);
 
   useEffect(() => {
-    setPins(locations);
-  }, [locations]);
-
-  const updateFilters = useCallback((filters: any) => {
     const updatedPins: any = [];
     locations?.map((pin) => {
       if (
@@ -85,54 +83,11 @@ function Map({
       }
     });
     setPins(updatedPins);
-  }, []);
+  }, [filters]);
 
-  // function updateFilters(filters: any) {
-  //   const updatedPins: any = [];
-  //   locations?.map((pin) => {
-  //     if (
-  //       !pin.isPerson &&
-  //       (filters.type === "foodBank" || filters.type === "all")
-  //     ) {
-  //       updatedPins.push(pin);
-  //     } else if (
-  //       pin.isPerson &&
-  //       (filters.type === "itinerant" || filters.type === "all")
-  //     ) {
-  //       if (
-  //         filters.pet === "all" ||
-  //         (filters.pet === "yes" && pin.hasPet) ||
-  //         (filters.pet === "no" && !pin.hasPet)
-  //       ) {
-  //         if (
-  //           filters.needsHygiene === "all" ||
-  //           (filters.needsHygiene === "yes" && pin.needsHygiene) ||
-  //           (filters.needsHygiene === "no" && !pin.needsHygiene)
-  //         ) {
-  //           const lastFedHourDifference = pin.lastDelivery
-  //             ? (Date.now() / 1000 - pin.lastDelivery.seconds) / 3600
-  //             : 10000;
-  //           if (
-  //             filters.lastFed === "all" ||
-  //             (filters.lastFed === "twelve" && lastFedHourDifference > 12) ||
-  //             (filters.lastFed === "eight" && lastFedHourDifference > 8) ||
-  //             (filters.lastFed === "four" && lastFedHourDifference > 4)
-  //           ) {
-  //             if (
-  //               filters.gender === "all" ||
-  //               (filters.gender === "male" && pin.sexe === "M") ||
-  //               (filters.gender === "female" && pin.sexe === "F") ||
-  //               (filters.gender === "other" && pin.sexe === "A")
-  //             ) {
-  //               updatedPins.push(pin);
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-  //   setPins(updatedPins);
-  // }
+  useEffect(() => {
+    setPins(locations);
+  }, [locations]);
 
   return (
     auth.currentUser && (
@@ -167,17 +122,15 @@ function Map({
               <DrawerContent>
                 <Sidebar
                   auth={auth}
-                  updateFilters={(filters) => updateFilters(filters)}
+                  filters={filters}
+                  setFilters={setFilters}
                   closeFunction={onClose}
                 />
               </DrawerContent>
             </Drawer>
           </>
         ) : (
-          <Sidebar
-            auth={auth}
-            updateFilters={(filters) => updateFilters(filters)}
-          />
+          <Sidebar auth={auth} filters={filters} setFilters={setFilters} />
         )}
         <CustomMap locations={pins} firebase={firebase} firestore={firestore} />
       </Box>
