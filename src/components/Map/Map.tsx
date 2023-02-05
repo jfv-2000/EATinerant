@@ -12,6 +12,9 @@ import AddForm from "../AddForm/AddForm";
 import ViewLocation from "../ViewLocation/ViewLocation";
 import CustomMarker from "./CustomMarker";
 import customShelter from "../../assets/tentIcon.svg";
+import manIcon from "../../assets/man.svg";
+import womanIcon from "../../assets/woman.svg";
+import otherIcon from "../../assets/other.svg";
 
 const containerStyle = {
   width: "100%",
@@ -61,6 +64,18 @@ export default function Map({
     }
   }
 
+  function getProperIcon(location: any) {
+    if (!location.isPerson) {
+      return customShelter as any;
+    } else if (location.sexe === "F") {
+      return womanIcon as any;
+    } else if (location.sexe === "M") {
+      return manIcon as any;
+    } else {
+      return otherIcon as any;
+    }
+  }
+
   function showPopupAdd(event: any) {
     if (event) {
       setPopup("N");
@@ -98,7 +113,7 @@ export default function Map({
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
       onZoomChanged={() => {
-        map ? setZoom(map.getZoom()) : console.log("Map not yet loaded.")
+        map ? setZoom(map.getZoom()) : console.log("Map not yet loaded.");
       }}
     >
       {showlocationMarker && (
@@ -131,11 +146,7 @@ export default function Map({
       {locations &&
         locations.map((location: any) => (
           <Marker
-            icon={
-              location.isPerson
-                ? (google.maps.Marker as any)
-                : (customShelter as any)
-            }
+            icon={getProperIcon(location)}
             onClick={() => showExistingAdd(location)}
             position={{
               lat: location.coordinates._lat,
@@ -192,7 +203,11 @@ export default function Map({
         color: "blue",
       }}
     >
-      <Spinner color="grey" size="xl" sx={{ width: "100px", height: "100px" }} />
+      <Spinner
+        color="grey"
+        size="xl"
+        sx={{ width: "100px", height: "100px" }}
+      />
     </Box>
   );
 }
