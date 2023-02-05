@@ -1,9 +1,9 @@
-import { Button, Box } from "@chakra-ui/react";
+import { Button, Box, BreadcrumbLink } from "@chakra-ui/react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import CustomMap from "../components/Map/Map";
 import AddForm from "../components/AddForm/AddForm";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ViewLocation from "../components/ViewLocation/ViewLocation";
 
 export default function Map({
@@ -18,12 +18,30 @@ export default function Map({
   const locationsCollection = firestore.collection("locations");
   const query = locationsCollection.limit(25);
   const [locations] = useCollectionData(query);
+  const [pins, setPins] = useState(locations)
   const [addLocationPopup, setAddLocationPopup] = useState(true);
   const [lat, setLat] = useState(0.0);
   const [long, setLong] = useState(0.0);
 
-  function updateFilters(filters: any) {
-    console.log(filters)
+  useEffect(() => {
+    setPins(locations)
+  }, [locations])
+
+  function updateFilters(filters: any, fieldUpdated: string) {
+    const updatedPins: any = []
+    locations?.map(pin => {
+      if (pin.isPerson && filters.type === "itinerant") {
+        if (filters.pet === "both" || filters.pet === "yes" && pin.hasPet || filters.pet === "no" && !pin.hasPet) {
+          console.log("has pet")
+          if (filters.needsHygiene === "both" || filters.needsHygiene === "yes" && pin.needsHygiene || filters.needsHygiene === "no" && !pin.needsHygiene) {
+            updatedPins.push(pin)
+          }
+        }
+      } else if (!pin.isPerson && filters.type === "foodBank") {
+        updatedPins.push(pin)
+      }
+    })
+    setPins(updatedPins)
   }
   return (
     auth.currentUser && (
@@ -36,7 +54,7 @@ export default function Map({
           display: "flex",
         }}
       >
-        <Sidebar locations={locations} auth={auth} updateFilters={(filters) => updateFilters(filters)} />
+        <Sidebar auth={auth} updateFilters={(filters, updatedField) => updateFilters(filters, updatedField)} />
         <Box>
           <p>{locations?.length} locations in the db</p>
           <AddForm
@@ -47,7 +65,7 @@ export default function Map({
             long={long}
             setAddLocationPopup={setAddLocationPopup}
           />
-          {locations && <ViewLocation {...locations[6]} />}
+          {/* {locations && <ViewLocation {...locations[6]} />} */}
           <CustomMap />
         </Box>
       </Box>

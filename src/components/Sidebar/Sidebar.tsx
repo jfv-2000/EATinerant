@@ -1,11 +1,9 @@
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
   Image,
   Select,
-  Switch,
   Text,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
@@ -14,13 +12,13 @@ import Logo from "../../assets/logo.png";
 import { RiFilter2Fill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 
-export default function Sidebar({ locations, auth, updateFilters }: { locations: any, auth: any, updateFilters: (filters: any) => void }) {
-  const [filters, setFilters] = useState({ itinerant: true, foodBank: true, shelter: false, needsHygiene: false, hasPet: true })
+export default function Sidebar({ auth, updateFilters }: { auth: any, updateFilters: (filters: any, fieldUpdated: string) => void }) {
+  const [filters, setFilters] = useState({ type: "itinerant", needsHygiene: "no", pet: "no" })
 
   function handleFilterChange(e: any, field: string) {
-    const updatedFilters = { ...filters, [field]: e.target.checked }
+    const updatedFilters = { ...filters, [field]: e.target.value }
     setFilters(updatedFilters)
-    updateFilters(updatedFilters);
+    updateFilters(updatedFilters, field);
   }
 
   return <Box className="sidebar_container">
@@ -37,37 +35,40 @@ export default function Sidebar({ locations, auth, updateFilters }: { locations:
           </Text>
         </Box>
         <Divider className="title_divider" sx={{ borderBottomWidth: 1.25, borderBottomColor: "#6e6e6e" }} />
-        <Box className="filter_option">
-          <Text>Itinerant</Text>
-          <Checkbox isChecked={filters.itinerant} onChange={(e) => handleFilterChange(e, "itinerant")} />
+        <Box className="dropdown_option">
+          <Text >
+            Type
+          </Text>
+          <Select defaultValue={filters.type} w="150px" size="sm" onChange={(e) => handleFilterChange(e, "type")}>
+            <option value="itinerant">Itinerant</option>
+            <option value="foodBank">Food Bank</option>
+          </Select>
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />
         </Box>
-        <Box className="filter_option">
-          <Text>Food Bank</Text>
-          <Checkbox isChecked={filters.foodBank} onChange={(e) => handleFilterChange(e, "foodBank")} />
+        <Box className="dropdown_option">
+          <Text >
+            Needs hygiene products
+          </Text>
+          <Select disabled={filters.type === "foodBank"} defaultValue={filters.needsHygiene} w="150px" size="sm" onChange={(e) => handleFilterChange(e, "needsHygiene")}>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="both">Doesn't matter</option>
+          </Select>
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />
         </Box>
-        <Box className="filter_option">
-          <Text>Shelter</Text>
-          <Checkbox isChecked={filters.shelter} onChange={(e) => handleFilterChange(e, "shelter")} />
-        </Box>
-        <Box className="divider_container">
-          <Divider className="option_divider" />
-        </Box>
-        <Box className="filter_option">
-          <Text>Needs hygiene products</Text>
-          <Checkbox isChecked={filters.needsHygiene} onChange={(e) => handleFilterChange(e, "needsHygiene")} />
-        </Box>
-        <Box className="divider_container">
-          <Divider className="option_divider" />
-        </Box>
-        <Box className="filter_option">
-          <Text>Has a pet</Text>
-          <Checkbox isChecked={filters.hasPet} onChange={(e) => handleFilterChange(e, "hasPet")} />
+        <Box className="dropdown_option">
+          <Text >
+            Has a pet
+          </Text>
+          <Select disabled={filters.type === "foodBank"} defaultValue={filters.pet} w="150px" size="sm" onChange={(e) => handleFilterChange(e, "pet")}>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="both">Doesn't matter</option>
+          </Select>
         </Box>
         <Box className="divider_container">
           <Divider className="option_divider" />
