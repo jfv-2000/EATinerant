@@ -12,6 +12,7 @@ import AddForm from "../AddForm/AddForm";
 import ViewLocation from "../ViewLocation/ViewLocation";
 import CustomMarker from "./CustomMarker";
 import { Location } from "../../models/location";
+import customShelter from "../../assets/tentIcon.svg";
 
 const containerStyle = {
   width: "100%",
@@ -56,7 +57,7 @@ export default function Map({
         };
         setCenter(currentLocation);
         setShowLocationMarker(true);
-        setZoom(19);
+        setZoom(18);
       });
     }
   }
@@ -97,7 +98,9 @@ export default function Map({
       options={{ streetViewControl: false }}
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
-      onDrag={() => setShowLocationMarker(false)}
+      onZoomChanged={() => {
+        map ? setZoom(map.getZoom()) : console.log("Map not yet loaded.");
+      }}
     >
       {showlocationMarker && (
         <CustomMarker
@@ -129,6 +132,11 @@ export default function Map({
       {locations &&
         locations.map((location: any) => (
           <Marker
+            icon={
+              location.isPerson
+                ? (google.maps.Marker as any)
+                : (customShelter as any)
+            }
             onClick={() => showExistingAdd(location)}
             position={{
               lat: location.coordinates._lat,
@@ -185,7 +193,11 @@ export default function Map({
         color: "blue",
       }}
     >
-      <Spinner size="xl" sx={{ width: "100px", height: "100px" }} />
+      <Spinner
+        color="grey"
+        size="xl"
+        sx={{ width: "100px", height: "100px" }}
+      />
     </Box>
   );
 }
