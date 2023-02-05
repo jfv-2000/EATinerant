@@ -17,6 +17,7 @@ import { IoMdLocate } from "react-icons/io";
 import { mapStyle } from "../../MapStyling";
 import AddForm from "../AddForm/AddForm";
 import ViewLocation from "../ViewLocation/ViewLocation";
+import CustomMarker from "./CustomMarker";
 
 const containerStyle = {
   width: "100%",
@@ -27,6 +28,7 @@ const defaultCenter = {
   lat: 45.508888,
   lng: -73.561668,
 };
+const DEFAULT_ZOOM = 13;
 
 export default function Map({
   locations,
@@ -39,10 +41,12 @@ export default function Map({
 }) {
   const [map, setMap] = React.useState(null);
   const [center, setCenter] = useState(defaultCenter);
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
   const [popup, setPopup] = useState<string | null>(null);
-  const [location, setLocation] = useState(null);
+  const [showlocationMarker, setShowLocationMarker] = useState(false);
+  const [location, setLocation] = useState<string | null>(null);
 
   const onLoad = React.useCallback(function callback(map: any) {
     map.set("styles", mapStyle);
@@ -57,6 +61,8 @@ export default function Map({
           lng: position.coords.longitude,
         };
         setCenter(currentLocation);
+        setShowLocationMarker(true);
+        setZoom(19);
       });
     }
   }
@@ -89,12 +95,17 @@ export default function Map({
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={13}
+      zoom={zoom}
       onLoad={onLoad}
       options={{ streetViewControl: false }}
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
+      onDrag={() => setShowLocationMarker(false)}
     >
+      {showlocationMarker && (
+        <CustomMarker position={center} icon={""}></CustomMarker>
+      )}
+
       <IconButton
         sx={{
           position: "absolute",
