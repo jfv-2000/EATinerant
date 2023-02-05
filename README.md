@@ -1,6 +1,5 @@
 # EATinerant
-
-![image](https://user-images.githubusercontent.com/46931367/216829704-69071a4d-adec-4b76-aa27-5c2594f8a513.png)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/46931367/216829751-472f291a-e993-4280-950b-013be9928cb0.gif)
 
 How to run the application locally,
 
