@@ -67,11 +67,7 @@ export default function Map({
             (filters.needsHygiene === "yes" && pin.needsHygiene) ||
             (filters.needsHygiene === "no" && !pin.needsHygiene)
           ) {
-            const lastDelivery = new Date(0);
-            lastDelivery.setUTCSeconds(pin.lastDelivery?.seconds);
-            const lastFedHourDifference =
-              new Date().getHours() -
-              (pin.lastDelivery ? lastDelivery.getHours() : 0);
+            const lastFedHourDifference = pin.lastDelivery ? (Date.now() / 1000 - pin.lastDelivery.seconds) / 3600 : 10000
             if (
               filters.lastFed === "all" ||
               (filters.lastFed === "twelve" && lastFedHourDifference > 12) ||
