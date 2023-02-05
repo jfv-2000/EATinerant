@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Image, Select, Text } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "./Sidebar.scss";
 import Logo from "../../assets/logo.png";
 import { RiFilter2Fill } from "react-icons/ri";

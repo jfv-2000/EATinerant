@@ -1,18 +1,6 @@
-import {
-  Heading,
-  IconButton,
-  Divider,
-  RadioGroup,
-  Stack,
-  Radio,
-  Checkbox,
-  Box,
-  Text,
-  Button,
-} from "@chakra-ui/react";
+import { Heading, Divider, Box, Text, Button } from "@chakra-ui/react";
 import { FcCheckmark } from "react-icons/fc";
-import { GrClose } from "react-icons/gr";
-import { Location } from "../../models/Location";
+import { Location } from "../../models/location";
 import { AiOutlineClose } from "react-icons/ai";
 import "./ViewLocation.scss";
 
@@ -56,7 +44,7 @@ export default function ViewLocation({
         <Box className="row">
           <Text fontSize={fontSize}>Sexe</Text>
           <Text fontSize={fontSize}>
-            {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Unknown"}
+            {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Other"}
           </Text>
         </Box>
       )}

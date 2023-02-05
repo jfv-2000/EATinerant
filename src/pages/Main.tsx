@@ -1,10 +1,8 @@
-import { Button, Box, BreadcrumbLink } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import CustomMap from "../components/Map/Map";
-import AddForm from "../components/AddForm/AddForm";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useEffect, useState } from "react";
-import ViewLocation from "../components/ViewLocation/ViewLocation";
 
 export default function Map({
   firebase,

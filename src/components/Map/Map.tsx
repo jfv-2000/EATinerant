@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import {
-  Box,
-  IconButton,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, IconButton, Spinner } from "@chakra-ui/react";
 import { IoMdLocate } from "react-icons/io";
 import { mapStyle } from "../../MapStyling";
 import AddForm from "../AddForm/AddForm";
