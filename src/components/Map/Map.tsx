@@ -13,6 +13,9 @@ import ViewLocation from "../ViewLocation/ViewLocation";
 import CustomMarker from "./CustomMarker";
 import { Location } from "../../models/location";
 import customShelter from "../../assets/tentIcon.svg";
+import manIcon from "../../assets/man.svg";
+import womanIcon from "../../assets/woman.svg";
+import otherIcon from "../../assets/other.svg";
 
 const containerStyle = {
   width: "100%",
@@ -60,6 +63,18 @@ export default function Map({
         setShowLocationMarker(true);
         setZoom(18);
       });
+    }
+  }
+
+  function getProperIcon(location: any) {
+    if (!location.isPerson) {
+      return customShelter as any;
+    } else if (location.sexe === "F") {
+      return womanIcon as any;
+    } else if (location.sexe === "M") {
+      return manIcon as any;
+    } else {
+      return otherIcon as any;
     }
   }
 
@@ -133,11 +148,7 @@ export default function Map({
       {locations &&
         locations.map((location: any) => (
           <Marker
-            icon={
-              location.isPerson
-                ? (google.maps.Marker as any)
-                : (customShelter as any)
-            }
+            icon={getProperIcon(location)}
             onClick={() => showExistingAdd(location)}
             position={{
               lat: location.coordinates._lat,
