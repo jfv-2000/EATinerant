@@ -8,3 +8,8 @@
   max-width: initial !important;
   max-height: initial !important;
 }
+
+.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+  right: 40px !important;
+  bottom: 180px !important;
+}

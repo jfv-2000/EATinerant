@@ -137,7 +137,7 @@ export default function Map({
       <IconButton
         sx={{
           position: "absolute",
-          bottom: "130px",
+          bottom: "200px",
           right: "10px",
         }}
         aria-label="locate me"
