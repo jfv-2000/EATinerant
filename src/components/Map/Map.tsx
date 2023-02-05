@@ -148,20 +148,21 @@ export default function Map({
           }}
           onCloseClick={() => setPopup(null)}
         >
-          {popup === "E" && location ? (
-            <ViewLocation
-              {...location}
+          {popup === "N" ? (
+            <AddForm
               firebase={firebase}
               firestore={firestore}
+              lat={lat}
+              lng={long}
+              setPopup={() => setPopup(null)}
             />
           ) : (
-            popup === "N" && (
-              <AddForm
+            popup === "E" &&
+            location && (
+              <ViewLocation
+                {...location}
                 firebase={firebase}
                 firestore={firestore}
-                lat={lat}
-                lng={long}
-                setPopup={() => setPopup(null)}
               />
             )
           )}

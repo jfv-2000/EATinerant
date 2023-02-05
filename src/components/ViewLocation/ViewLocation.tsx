@@ -31,7 +31,7 @@ export default function ViewLocation({
   return (
     <Box className="view_container">
       <Heading size="md" className="header">
-        {name && !isPerson ? name : "Person Spotting"}
+        {name && !isPerson ? name : "Person Spotted"}
       </Heading>
       <Divider />
       <Box className="row">
