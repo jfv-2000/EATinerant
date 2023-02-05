@@ -27,12 +27,12 @@ export default function Map({
     locations?.map((pin) => {
       if (pin.isPerson && (filters.type === "itinerant" || filters.type === "all")) {
         if (
-          filters.pet === "both" ||
+          filters.pet === "all" ||
           (filters.pet === "yes" && pin.hasPet) ||
           (filters.pet === "no" && !pin.hasPet)
         ) {
           if (
-            filters.needsHygiene === "both" ||
+            filters.needsHygiene === "all" ||
             (filters.needsHygiene === "yes" && pin.needsHygiene) ||
             (filters.needsHygiene === "no" && !pin.needsHygiene)
           ) {
@@ -41,7 +41,7 @@ export default function Map({
             const lastFedHourDifference =
               new Date().getHours() - lastDelivery.getHours();
             if (
-              filters.lastFed === "idc" ||
+              filters.lastFed === "all" ||
               (filters.lastFed === "twelve" && lastFedHourDifference > 12) ||
               (filters.lastFed === "eight" && lastFedHourDifference > 8) ||
               (filters.lastFed === "four" && lastFedHourDifference > 4)

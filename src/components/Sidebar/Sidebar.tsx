@@ -60,13 +60,13 @@ export default function Sidebar({
           <Select
             disabled={filters.type === "foodBank"}
             defaultValue={filters.needsHygiene}
-            w="115px"
+            w="65px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "needsHygiene")}
           >
+            <option value="all">All</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
-            <option value="both">Doesn't matter</option>
           </Select>
         </Box>
         <Box className="divider_container">
@@ -77,13 +77,13 @@ export default function Sidebar({
           <Select
             disabled={filters.type === "foodBank"}
             defaultValue={filters.pet}
-            w="115px"
+            w="65"
             size="sm"
             onChange={(e) => handleFilterChange(e, "pet")}
           >
+            <option value="all">All</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
-            <option value="both">Doesn't matter</option>
           </Select>
         </Box>
         <Box className="divider_container">
@@ -94,14 +94,14 @@ export default function Sidebar({
           <Select
             disabled={filters.type === "foodBank"}
             defaultValue={filters.lastFed}
-            w="115px"
+            w="65px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "lastFed")}
           >
+            <option value="all">All</option>
             <option value="four">&gt; 4 hrs</option>
             <option value="eight">&gt; 8 hrs</option>
             <option value="twelve">&gt; 12 hrs</option>
-            <option value="idc">Doesn't matter</option>
           </Select>
         </Box>
         <Box className="divider_container">

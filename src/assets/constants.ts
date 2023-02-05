@@ -1,6 +1,6 @@
 export const initialFilters = {
     type: "all",
-    needsHygiene: "no",
-    pet: "no",
-    lastFed: "idc",
+    needsHygiene: "all",
+    pet: "all",
+    lastFed: "all",
 }
