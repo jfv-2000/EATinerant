@@ -1,6 +1,9 @@
 import { Box, IconButton, Spinner } from "@chakra-ui/react";
 import {
-  GoogleMap, InfoWindow, Marker, useJsApiLoader
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
@@ -36,7 +39,7 @@ export default function Map({
   const [long, setLong] = useState(0);
   const [popup, setPopup] = useState<string | null>(null);
   const [showlocationMarker, setShowLocationMarker] = useState(false);
-  const [location, setLocation] = useState<string | null>(null);
+  const [location, setLocation] = useState<Location | null>(null);
 
   const onLoad = React.useCallback(function callback(map: any) {
     map.set("styles", mapStyle);
@@ -163,6 +166,7 @@ export default function Map({
                 {...location}
                 firebase={firebase}
                 firestore={firestore}
+                setPopup={() => setPopup(null)}
               />
             )
           )}
