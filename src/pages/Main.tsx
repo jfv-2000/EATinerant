@@ -78,7 +78,12 @@ export default function Map({
               (filters.lastFed === "eight" && lastFedHourDifference > 8) ||
               (filters.lastFed === "four" && lastFedHourDifference > 4)
             ) {
-              updatedPins.push(pin);
+              if (filters.gender === "all" ||
+                (filters.gender === "male" && pin.sexe === "M") ||
+                (filters.gender === "female" && pin.sexe === "F") ||
+                (filters.gender === "other" && pin.sexe === "A")) {
+                updatedPins.push(pin);
+              }
             }
           }
         }

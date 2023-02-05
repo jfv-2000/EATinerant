@@ -1,5 +1,4 @@
 .sidebar_container {
-  // border: 1px solid blue;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   display: flex;
   flex-direction: column;
@@ -7,6 +6,8 @@
 
 .sidebar_section {
   flex: auto;
+  padding: 5px;
+  padding-top: 10px;
 }
 .header {
   display: flex;
@@ -55,7 +56,7 @@
 .dropdown_option {
   display: flex;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 5px 15px;
   align-items: center;
 }
 
@@ -74,5 +75,10 @@
 
 .divider_container {
   width: 100%;
-  padding: 3px 10px;
+  padding: 3px 20px 3px 10px;
+}
+
+.title_divider {
+  width: 100%;
+  padding: 0 5px;
 }

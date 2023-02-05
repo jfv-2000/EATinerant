@@ -65,42 +65,45 @@ export default function ViewLocation({
         {name && !isPerson ? name : "Person Spotted"}
       </Heading>
       <Divider />
-      <Box className="row">
-        <Text fontSize={fontSize}>Pinned Location</Text>
-        <Text fontSize={fontSize} sx={{ textAlign: "end" }}>
-          {coordinates._lat}° N, {coordinates._long}° E
-        </Text>
+      <Box className="content">
+        <Box className="row">
+          <Text fontSize={fontSize}>Pinned Location</Text>
+          <Text fontSize={fontSize} sx={{ textAlign: "end" }}>
+            {coordinates._lat}° N, {coordinates._long}° E
+          </Text>
+        </Box>
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Sexe</Text>
+            <Text fontSize={fontSize}>
+              {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Other"}
+            </Text>
+          </Box>
+        )}
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Pet</Text>
+            {hasPet ? <FcCheckmark /> : <AiOutlineClose color="red" />}
+          </Box>
+        )}
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Female Hygiene Products</Text>
+            {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
+          </Box>
+        )}
+        {isPerson && (
+          <Box className="row">
+            <Text fontSize={fontSize}>Last Delivery</Text>
+            <Text fontSize={fontSize}>
+              {lastDelivery
+                ? new Date(lastDelivery?.seconds * 1000).toLocaleString()
+                : "Never"}
+            </Text>
+          </Box>
+        )}
       </Box>
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Sexe</Text>
-          <Text fontSize={fontSize}>
-            {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Other"}
-          </Text>
-        </Box>
-      )}
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Pet</Text>
-          {hasPet ? <FcCheckmark /> : <AiOutlineClose color="red" />}
-        </Box>
-      )}
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Female Hygiene Products</Text>
-          {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
-        </Box>
-      )}
-      {isPerson && (
-        <Box className="row">
-          <Text fontSize={fontSize}>Last Delivery</Text>
-          <Text fontSize={fontSize}>
-            {lastDelivery
-              ? new Date(lastDelivery?.seconds * 1000).toLocaleString()
-              : "Never"}
-          </Text>
-        </Box>
-      )}
+
       <Box className="buttons_list">
         {isPerson && (
           <Button

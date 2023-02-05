@@ -71,21 +71,42 @@ export default function Sidebar({
             Filters
           </Text>
         </Box>
-        <Divider
-          className="title_divider"
-          sx={{ borderBottomWidth: 1.25, borderBottomColor: "#6e6e6e" }}
-        />
+        <Box className="title_divider">
+          <Divider
+            sx={{ borderBottomWidth: 1.25, borderBottomColor: "#6e6e6e" }}
+          />
+        </Box>
         <Box className="dropdown_option">
           <Text>Type</Text>
           <Select
+            variant='unstyled'
             defaultValue={filters.type}
-            w="100px"
+            w="115px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "type")}
           >
             <option value="all">All</option>
             <option value="itinerant">Itinerant</option>
-            <option value="foodBank">Food Bank</option>
+            <option value="foodBank">Help Centers</option>
+          </Select>
+        </Box>
+        <Box className="divider_container">
+          <Divider className="option_divider" />
+        </Box>
+        <Box className="dropdown_option">
+          <Text>Gender</Text>
+          <Select
+            w="115px"
+            variant='unstyled'
+            disabled={filters.type === "foodBank"}
+            defaultValue={filters.gender}
+            size="sm"
+            onChange={(e) => handleFilterChange(e, "gender")}
+          >
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
           </Select>
         </Box>
         <Box className="divider_container">
@@ -94,9 +115,10 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Needs hygiene products</Text>
           <Select
+            variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.needsHygiene}
-            w="65px"
+            w="115px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "needsHygiene")}
           >
@@ -111,9 +133,10 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Has a pet</Text>
           <Select
+            variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.pet}
-            w="65"
+            w="115px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "pet")}
           >
@@ -126,11 +149,12 @@ export default function Sidebar({
           <Divider className="option_divider" />
         </Box>
         <Box className="dropdown_option">
-          <Text>Last fed</Text>
+          <Text>Last delivered</Text>
           <Select
+            w="115px"
+            variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.lastFed}
-            w="65px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "lastFed")}
           >
