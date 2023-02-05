@@ -11,6 +11,7 @@ import { mapStyle } from "../../MapStyling";
 import AddForm from "../AddForm/AddForm";
 import ViewLocation from "../ViewLocation/ViewLocation";
 import CustomMarker from "./CustomMarker";
+import { Location } from "../../models/location";
 
 const containerStyle = {
   width: "100%",
