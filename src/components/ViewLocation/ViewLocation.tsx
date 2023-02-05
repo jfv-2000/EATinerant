@@ -22,47 +22,56 @@ export default function ViewLocation({
   coordinates,
   createdAt,
   hasPet,
-  isPerson,
+  isPerson = false,
   lastDelivery,
   needsHygiene,
   sexe,
   name,
   link,
-}: Location) {
+  firebase,
+  firestore,
+}: {
+  firebase: any;
+  firestore: any;
+} & Location) {
+  const locationsCollection = firestore.collection("locations");
+
+  //firestore.where("name", "==", bookName).get()
+  // .then(querySnapshot => {
+  //     querySnapshot.docs[0].ref.delete();
+  // });
   return (
     <Box className="view_container">
-      <Box className="header">
-        <Heading size="md">
-          {name && !isPerson ? name : "Person Spotting"}
-        </Heading>
-        <IconButton
-          className="close"
-          size="xs"
-          aria-label="Close Modal"
-          icon={<GrClose />}
-        />
-      </Box>
+      <Heading size="md" className="header">
+        {name && !isPerson ? name : "Person Spotting"}
+      </Heading>
       <Divider />
       <Box className="row">
         <Text fontSize={fontSize}>Pinned Location</Text>
-        <Text fontSize={fontSize}>
+        <Text fontSize={fontSize} sx={{ textAlign: "end" }}>
           {coordinates._lat}° N, {coordinates._long}° E
         </Text>
       </Box>
-      <Box className="row">
-        <Text fontSize={fontSize}>Sexe</Text>
-        <Text fontSize={fontSize}>
-          {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Unknown"}
-        </Text>
-      </Box>
-      <Box className="row">
-        <Text fontSize={fontSize}>Pet</Text>
-        {hasPet ? <FcCheckmark /> : <AiOutlineClose color="red" />}
-      </Box>
-      <Box className="row">
-        <Text fontSize={fontSize}>Female Hygiene Products</Text>
-        {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
-      </Box>
+      {isPerson && (
+        <Box className="row">
+          <Text fontSize={fontSize}>Sexe</Text>
+          <Text fontSize={fontSize}>
+            {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Unknown"}
+          </Text>
+        </Box>
+      )}
+      {isPerson && (
+        <Box className="row">
+          <Text fontSize={fontSize}>Pet</Text>
+          {hasPet ? <FcCheckmark /> : <AiOutlineClose color="red" />}
+        </Box>
+      )}
+      {isPerson && (
+        <Box className="row">
+          <Text fontSize={fontSize}>Female Hygiene Products</Text>
+          {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
+        </Box>
+      )}
       <Button
         className="map"
         size="xs"

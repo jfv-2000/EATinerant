@@ -16,36 +16,22 @@ export default function Map({
   auth: any;
 }) {
   const locationsCollection = firestore.collection("locations");
-  const query = locationsCollection.limit(25);
-  const [locations] = useCollectionData(query);
-  const [addLocationPopup, setAddLocationPopup] = useState(true);
-  const [lat, setLat] = useState(0.0);
-  const [long, setLong] = useState(0.0);
+  const [locations] = useCollectionData(locationsCollection);
+
   return (
     auth.currentUser && (
       <Box
         sx={{
-          // display: "flex",
-          // justifyContent: "center",
-          // alignItems: "center",
           height: "100vh",
           display: "flex",
         }}
       >
         <Sidebar locations={locations} auth={auth} />
-        <Box>
-          <p>{locations?.length} locations in the db</p>
-          <AddForm
-            firestore={firestore}
-            firebase={firebase}
-            auth={auth}
-            lat={lat}
-            long={long}
-            setAddLocationPopup={setAddLocationPopup}
-          />
-          {locations && <ViewLocation {...locations[6]} />}
-          <CustomMap />
-        </Box>
+        <CustomMap
+          locations={locations}
+          firebase={firebase}
+          firestore={firestore}
+        />
       </Box>
     )
   );

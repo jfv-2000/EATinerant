@@ -1,14 +1,12 @@
 .add_container {
-  padding: 20px;
-  border: 1px solid black;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   width: 350px;
+  background-color: white;
+  z-index: 10;
+  position: inherit;
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 10px;
   }
   .row {

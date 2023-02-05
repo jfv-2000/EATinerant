@@ -4,16 +4,15 @@ import {
   Checkbox,
   Divider,
   Heading,
-  IconButton,
   Radio,
   RadioGroup,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { GeoPoint } from "firebase/firestore";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import "./AddForm.scss";
-import { GrClose } from "react-icons/gr";
+import { v4 as uuidv4 } from "uuid";
 
 const fontSize = "sm";
 const radioSize = "sm";
@@ -21,17 +20,15 @@ const radioSize = "sm";
 export default function AddForm({
   firebase,
   firestore,
-  auth,
   lat,
-  long,
-  setAddLocationPopup,
+  lng,
+  setPopup,
 }: {
   firebase: any;
   firestore: any;
-  auth: any;
   lat: number;
-  long: number;
-  setAddLocationPopup: Dispatch<SetStateAction<boolean>>;
+  lng: number;
+  setPopup: () => void;
 }) {
   const locationsCollection = firestore.collection("locations");
 
@@ -42,33 +39,29 @@ export default function AddForm({
   const closePopup = async (e: any) => {
     e.preventDefault();
     await locationsCollection.add({
-      coordinates: new GeoPoint(lat, long),
+      coordinates: new GeoPoint(lat, lng),
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       hasPet,
       sexe,
       lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
       isPerson: true,
       needsHygiene,
+      id: uuidv4(),
     });
-    setAddLocationPopup(false);
+    setPopup();
   };
 
   return (
     <Box className="add_container">
-      <Box className="header">
-        <Heading size="md">Add Person Spotting</Heading>
-        <IconButton
-          size="xs"
-          aria-label="Close Modal"
-          icon={<GrClose />}
-          onClick={() => setAddLocationPopup(false)}
-        />
-      </Box>
+      <Heading className="header" size="md">
+        Add Person Spotting
+      </Heading>
+
       <Divider />
       <Box className="row">
         <Text fontSize={fontSize}>Pinned Location</Text>
-        <Text fontSize={fontSize}>
-          {lat}° N, {long}° E
+        <Text fontSize={fontSize} sx={{ textAlign: "end" }}>
+          {lat}° N, {lng}° E
         </Text>
       </Box>
       <Box className="row">
