@@ -25,7 +25,7 @@ export default function Map({
   function updateFilters(filters: any) {
     const updatedPins: any = [];
     locations?.map((pin) => {
-      if (pin.isPerson && filters.type === "itinerant") {
+      if (pin.isPerson && (filters.type === "itinerant" || filters.type === "all")) {
         if (
           filters.pet === "both" ||
           (filters.pet === "yes" && pin.hasPet) ||
@@ -50,11 +50,12 @@ export default function Map({
             }
           }
         }
-      } else if (!pin.isPerson && filters.type === "foodBank") {
+      } else if (!pin.isPerson && (filters.type === "foodBank" || filters.type === "all")) {
         updatedPins.push(pin);
       }
     });
     setPins(updatedPins);
+    console.log(pins)
   }
   return (
     auth.currentUser && (

@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import {
-  GoogleMap,
-  useJsApiLoader,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
 import { Box, IconButton, Spinner } from "@chakra-ui/react";
+import {
+  GoogleMap, InfoWindow, Marker, useJsApiLoader
+} from "@react-google-maps/api";
+import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
 import { mapStyle } from "../../MapStyling";
 import AddForm from "../AddForm/AddForm";
@@ -32,7 +29,7 @@ export default function Map({
   firebase: any;
   firestore: any;
 }) {
-  const [map, setMap] = React.useState(null);
+  const [map, setMap] = React.useState<any | null>(null);
   const [center, setCenter] = useState(defaultCenter);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [lat, setLat] = useState(0);
@@ -89,7 +86,10 @@ export default function Map({
       mapContainerStyle={containerStyle}
       center={center}
       zoom={zoom}
-      onLoad={onLoad}
+      onLoad={(map) => {
+        onLoad(map);
+        getCurrentPosition();
+      }}
       options={{ streetViewControl: false }}
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
