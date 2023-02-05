@@ -50,7 +50,7 @@
 .dropdown_option {
   display: flex;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 5px 15px;
   align-items: center;
 }
 
@@ -69,5 +69,22 @@
 
 .divider_container {
   width: 100%;
-  padding: 3px 10px;
+  padding: 3px 20px 3px 10px;
 }
+
+.title_divider{
+  width: 100%;
+ padding: 0 5px;
+}
+// .chakra-select.css-3t3qbf{
+//   border: 1px solid blue;
+//   width: 100%;
+//   box-sizing: content-box;
+// }
+// select.chakra-select{
+//   width: 100%;
+//   box-sizing: border-box;
+//   border: 1px solid red;
+//   display: flex;
+//   justify-content: flex-end;
+// }
