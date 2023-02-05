@@ -18,6 +18,7 @@ import { mapStyle } from "../../MapStyling";
 import AddForm from "../AddForm/AddForm";
 import ViewLocation from "../ViewLocation/ViewLocation";
 import CustomMarker from "./CustomMarker";
+import customShelter from "../../assets/tentIcon.svg";
 
 const containerStyle = {
   width: "100%",
@@ -132,6 +133,11 @@ export default function Map({
       {locations &&
         locations.map((location: any) => (
           <Marker
+            icon={
+              location.isPerson
+                ? (google.maps.Marker as any)
+                : (customShelter as any)
+            }
             onClick={() => showExistingAdd(location)}
             position={{
               lat: location.coordinates._lat,
