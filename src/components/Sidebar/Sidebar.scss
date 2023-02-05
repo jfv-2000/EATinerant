@@ -58,6 +58,12 @@
   justify-content: space-between;
   padding: 5px 15px;
   align-items: center;
+  > p {
+    flex: 2;
+  }
+  > div {
+    flex: 1;
+  }
 }
 
 .option_divider {

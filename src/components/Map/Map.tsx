@@ -3,7 +3,7 @@ import {
   GoogleMap,
   InfoWindow,
   Marker,
-  useJsApiLoader
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
@@ -115,7 +115,7 @@ export default function Map({
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
       onZoomChanged={() => {
-        map ? setZoom(map.getZoom()) : console.log("Map not yet loaded.");
+        map && setZoom(map.getZoom());
       }}
     >
       {showlocationMarker && (
