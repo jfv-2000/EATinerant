@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { Box, IconButton, Spinner } from "@chakra-ui/react";
 import {
   GoogleMap,
-  useJsApiLoader,
-  Marker,
   InfoWindow,
+  Marker,
+  useJsApiLoader,
 } from "@react-google-maps/api";
-import {
-  Box,
-  IconButton,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Spinner,
-} from "@chakra-ui/react";
+import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
 import { mapStyle } from "../../MapStyling";
 import AddForm from "../AddForm/AddForm";
@@ -40,14 +33,14 @@ export default function Map({
   firebase: any;
   firestore: any;
 }) {
-  const [map, setMap] = React.useState(null);
+  const [map, setMap] = React.useState<any | null>(null);
   const [center, setCenter] = useState(defaultCenter);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
   const [popup, setPopup] = useState<string | null>(null);
   const [showlocationMarker, setShowLocationMarker] = useState(false);
-  const [location, setLocation] = useState<string | null>(null);
+  const [location, setLocation] = useState<Location | null>(null);
 
   const onLoad = React.useCallback(function callback(map: any) {
     map.set("styles", mapStyle);
@@ -63,7 +56,7 @@ export default function Map({
         };
         setCenter(currentLocation);
         setShowLocationMarker(true);
-        setZoom(19);
+        setZoom(18);
       });
     }
   }
@@ -97,11 +90,16 @@ export default function Map({
       mapContainerStyle={containerStyle}
       center={center}
       zoom={zoom}
-      onLoad={onLoad}
+      onLoad={(map) => {
+        onLoad(map);
+        getCurrentPosition();
+      }}
       options={{ streetViewControl: false }}
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
-      onDrag={() => setShowLocationMarker(false)}
+      onZoomChanged={() => {
+        map ? setZoom(map.getZoom()) : console.log("Map not yet loaded.")
+      }}
     >
       {showlocationMarker && (
         <CustomMarker
@@ -161,19 +159,21 @@ export default function Map({
           }}
           onCloseClick={() => setPopup(null)}
         >
-          {popup === "E" && location ? (
-            <ViewLocation
-              {...location}
+          {popup === "N" ? (
+            <AddForm
               firebase={firebase}
               firestore={firestore}
+              lat={lat}
+              lng={long}
+              setPopup={() => setPopup(null)}
             />
           ) : (
-            popup === "N" && (
-              <AddForm
+            popup === "E" &&
+            location && (
+              <ViewLocation
+                {...location}
                 firebase={firebase}
                 firestore={firestore}
-                lat={lat}
-                lng={long}
                 setPopup={() => setPopup(null)}
               />
             )
@@ -192,7 +192,7 @@ export default function Map({
         color: "blue",
       }}
     >
-      <Spinner size="xl" sx={{ width: "100px", height: "100px" }} />
+      <Spinner color="grey" size="xl" sx={{ width: "100px", height: "100px" }} />
     </Box>
   );
 }

@@ -43,7 +43,7 @@ export default function AddForm({
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       hasPet,
       sexe,
-      lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
+      lastDelivery: null,
       isPerson: true,
       needsHygiene,
       id: uuidv4(),

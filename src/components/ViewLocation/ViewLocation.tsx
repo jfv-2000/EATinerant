@@ -1,22 +1,22 @@
-import {
-  Heading,
-  IconButton,
-  Divider,
-  RadioGroup,
-  Stack,
-  Radio,
-  Checkbox,
-  Box,
-  Text,
-  Button,
-} from "@chakra-ui/react";
+import { Heading, Divider, Box, Text, Button } from "@chakra-ui/react";
 import { FcCheckmark } from "react-icons/fc";
-import { GrClose } from "react-icons/gr";
-import { Location } from "../../models/Location";
+import { Location } from "../../models/location";
 import { AiOutlineClose } from "react-icons/ai";
 import "./ViewLocation.scss";
+import { SiGooglemaps } from "react-icons/si";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { GiInvisible } from "react-icons/gi";
 
 const fontSize = "sm";
+
+const button_props = {
+  className: "map",
+  size: "xs",
+  sx: {
+    alignSelf: "flex-end",
+    marginTop: "10px",
+  },
+};
 
 export default function ViewLocation({
   coordinates,
@@ -30,20 +30,48 @@ export default function ViewLocation({
   link,
   firebase,
   firestore,
+  setPopup,
 }: {
   firebase: any;
   firestore: any;
+  setPopup: () => void;
 } & Location) {
   const locationsCollection = firestore.collection("locations");
 
-  //firestore.where("name", "==", bookName).get()
-  // .then(querySnapshot => {
-  //     querySnapshot.docs[0].ref.delete();
-  // });
+  const noLongerHere = async (e: any) => {
+    // e.preventDefault();
+    // await locationsCollection.add({
+    //   coordinates: new GeoPoint(lat, lng),
+    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //   hasPet,
+    //   sexe,
+    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
+    //   isPerson: true,
+    //   needsHygiene,
+    //   id: uuidv4(),
+    // });
+    // setPopup();
+  };
+
+  const justDelivered = async (e: any) => {
+    // e.preventDefault();
+    // await locationsCollection.add({
+    //   coordinates: new GeoPoint(lat, lng),
+    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //   hasPet,
+    //   sexe,
+    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
+    //   isPerson: true,
+    //   needsHygiene,
+    //   id: uuidv4(),
+    // });
+    // setPopup();
+  };
+
   return (
     <Box className="view_container">
       <Heading size="md" className="header">
-        {name && !isPerson ? name : "Person Spotting"}
+        {name && !isPerson ? name : "Person Spotted"}
       </Heading>
       <Divider />
       <Box className="row">
@@ -56,7 +84,7 @@ export default function ViewLocation({
         <Box className="row">
           <Text fontSize={fontSize}>Sexe</Text>
           <Text fontSize={fontSize}>
-            {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Unknown"}
+            {sexe === "M" ? "Male" : sexe === "F" ? "Female" : "Other"}
           </Text>
         </Box>
       )}
@@ -72,25 +100,54 @@ export default function ViewLocation({
           {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
         </Box>
       )}
-      <Button
-        className="map"
-        size="xs"
-        colorScheme="blue"
-        sx={{
-          alignSelf: "flex-end",
-          marginTop: "10px",
-        }}
-        onClick={() =>
-          window.open(
-            link
-              ? link
-              : `http://maps.google.com?q=${coordinates._lat},${coordinates._long}`,
-            "_blank"
-          )
-        }
-      >
-        View in Maps
-      </Button>
+      {isPerson && (
+        <Box className="row">
+          <Text fontSize={fontSize}>Last Delivery</Text>
+          <Text fontSize={fontSize}>
+            {lastDelivery
+              ? new Date(lastDelivery?.seconds * 1000).toLocaleString()
+              : "Never"}
+          </Text>
+        </Box>
+      )}
+      <Box className="buttons_list">
+        {isPerson && (
+          <Button
+            {...button_props}
+            colorScheme="blue"
+            rightIcon={<CiDeliveryTruck />}
+            onClick={justDelivered}
+          >
+            Just delivered
+          </Button>
+        )}
+
+        <Button
+          {...button_props}
+          rightIcon={<SiGooglemaps />}
+          colorScheme="green"
+          onClick={() =>
+            window.open(
+              link
+                ? link
+                : `http://maps.google.com?q=${coordinates._lat},${coordinates._long}`,
+              "_blank"
+            )
+          }
+        >
+          View in Maps
+        </Button>
+        {isPerson && (
+          <Button
+            {...button_props}
+            colorScheme="red"
+            rightIcon={<GiInvisible />}
+            onClick={noLongerHere}
+          >
+            No Longer Here
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 }
