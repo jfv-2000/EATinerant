@@ -3,8 +3,20 @@ import { FcCheckmark } from "react-icons/fc";
 import { Location } from "../../models/location";
 import { AiOutlineClose } from "react-icons/ai";
 import "./ViewLocation.scss";
+import { SiGooglemaps } from "react-icons/si";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { GiInvisible } from "react-icons/gi";
 
 const fontSize = "sm";
+
+const button_props = {
+  className: "map",
+  size: "xs",
+  sx: {
+    alignSelf: "flex-end",
+    marginTop: "10px",
+  },
+};
 
 export default function ViewLocation({
   coordinates,
@@ -60,25 +72,44 @@ export default function ViewLocation({
           {needsHygiene ? <FcCheckmark /> : <AiOutlineClose color="red" />}
         </Box>
       )}
-      <Button
-        className="map"
-        size="xs"
-        colorScheme="blue"
-        sx={{
-          alignSelf: "flex-end",
-          marginTop: "10px",
-        }}
-        onClick={() =>
-          window.open(
-            link
-              ? link
-              : `http://maps.google.com?q=${coordinates._lat},${coordinates._long}`,
-            "_blank"
-          )
-        }
-      >
-        View in Maps
-      </Button>
+      <Box className="buttons_list">
+        {isPerson && (
+          <Button
+            {...button_props}
+            colorScheme="blue"
+            rightIcon={<CiDeliveryTruck />}
+            onClick={() => {}}
+          >
+            Just delivered
+          </Button>
+        )}
+
+        <Button
+          {...button_props}
+          rightIcon={<SiGooglemaps />}
+          colorScheme="green"
+          onClick={() =>
+            window.open(
+              link
+                ? link
+                : `http://maps.google.com?q=${coordinates._lat},${coordinates._long}`,
+              "_blank"
+            )
+          }
+        >
+          View in Maps
+        </Button>
+        {isPerson && (
+          <Button
+            {...button_props}
+            colorScheme="red"
+            rightIcon={<GiInvisible />}
+            onClick={() => {}}
+          >
+            No Longer Here
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 }
