@@ -16,6 +16,7 @@ import customShelter from "../../assets/tentIcon.svg";
 import manIcon from "../../assets/man.svg";
 import womanIcon from "../../assets/woman.svg";
 import otherIcon from "../../assets/other.svg";
+import { apiKey } from "../../credentials";
 
 const containerStyle = {
   width: "100%",
@@ -95,7 +96,7 @@ export default function Map({
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyAwuB2MmYz2O8BLRyNH7wae45H_4AXLYhE",
+    googleMapsApiKey: apiKey,
   });
 
   const onUnmount = React.useCallback(function callback(map: any) {
