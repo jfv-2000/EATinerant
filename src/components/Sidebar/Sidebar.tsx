@@ -16,7 +16,7 @@ export default function Sidebar({
     type: "itinerant",
     needsHygiene: "no",
     pet: "no",
-    lastFed: "twelve",
+    lastFed: "idc",
   });
 
   function handleFilterChange(e: any, field: string) {
@@ -98,8 +98,8 @@ export default function Sidebar({
             <Text>Last fed</Text>
             <Select
               disabled={filters.type === "foodBank"}
-              defaultValue={filters.pet}
-              w="100px"
+              defaultValue={filters.lastFed}
+              w="115px"
               size="sm"
               onChange={(e) => handleFilterChange(e, "lastFed")}
             >
