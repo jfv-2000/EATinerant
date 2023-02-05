@@ -1,5 +1,7 @@
 # EATinerant
 
+![image](https://user-images.githubusercontent.com/46931367/216829704-69071a4d-adec-4b76-aa27-5c2594f8a513.png)
+
 How to run the application locally,
 
 1. Have node.js installed
