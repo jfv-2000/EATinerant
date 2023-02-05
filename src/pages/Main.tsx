@@ -23,7 +23,7 @@ export default function Map({
   auth: any;
 }) {
   const locationsCollection = firestore.collection("locations");
-  const query = locationsCollection.limit(25);
+  const query = locationsCollection;
   const [locations] = useCollectionData(query);
   const [pins, setPins] = useState(locations);
   const isMobile = useBreakpointValue({
@@ -62,7 +62,9 @@ export default function Map({
             (filters.needsHygiene === "yes" && pin.needsHygiene) ||
             (filters.needsHygiene === "no" && !pin.needsHygiene)
           ) {
-            const lastFedHourDifference = pin.lastDelivery ? (Date.now() / 1000 - pin.lastDelivery.seconds) / 3600 : 10000
+            const lastFedHourDifference = pin.lastDelivery
+              ? (Date.now() / 1000 - pin.lastDelivery.seconds) / 3600
+              : 10000;
             if (
               filters.lastFed === "all" ||
               (filters.lastFed === "twelve" && lastFedHourDifference > 12) ||
