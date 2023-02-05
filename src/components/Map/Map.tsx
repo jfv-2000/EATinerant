@@ -103,7 +103,17 @@ export default function Map({
       onDrag={() => setShowLocationMarker(false)}
     >
       {showlocationMarker && (
-        <CustomMarker position={center} icon={""}></CustomMarker>
+        <CustomMarker
+          position={center}
+          icon={{
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillOpacity: 1,
+            strokeWeight: 2,
+            fillColor: "#5384ED",
+            strokeColor: "#ffffff",
+          }}
+        />
       )}
 
       <IconButton
