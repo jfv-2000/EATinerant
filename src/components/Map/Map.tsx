@@ -3,7 +3,7 @@ import {
   GoogleMap,
   InfoWindow,
   Marker,
-  useJsApiLoader
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
@@ -104,6 +104,7 @@ export default function Map({
 
   return isLoaded ? (
     <GoogleMap
+      clickableIcons={false}
       mapContainerStyle={containerStyle}
       center={center}
       zoom={zoom}
