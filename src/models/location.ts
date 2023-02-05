@@ -9,4 +9,5 @@ export interface Location {
   name?: string;
   link?: string;
   id: string;
+  phoneNumber?: string;
 }

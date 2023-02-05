@@ -6,6 +6,7 @@ import "./ViewLocation.scss";
 import { SiGooglemaps } from "react-icons/si";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { GiInvisible } from "react-icons/gi";
+import { twilioCode1, twilioCode2, twilioCode3 } from "../../credentials";
 
 const fontSize = "sm";
 
@@ -32,6 +33,7 @@ export default function ViewLocation({
   firestore,
   setPopup,
   id,
+  phoneNumber,
 }: {
   firebase: any;
   firestore: any;
@@ -57,6 +59,21 @@ export default function ViewLocation({
       });
     });
     setPopup();
+    phoneNumber &&
+      fetch(
+        `https://api.twilio.com/2010-04-01/Accounts/${twilioCode1}/Messages.json`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Basic " + btoa(`${twilioCode1}:${twilioCode2}`),
+          },
+          body: new URLSearchParams({
+            To: phoneNumber,
+            MessagingServiceSid: twilioCode3,
+            Body: "Un(e) initérant(e) que vous avez marqué(e) a reçu un don. \n\nMerci pour votre contribution!",
+          }),
+        }
+      );
   };
 
   return (
