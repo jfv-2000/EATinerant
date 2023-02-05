@@ -3,7 +3,6 @@ import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
 import CustomMarker from "./CustomMarker";
-import { blueDot } from "./LocatorIcon";
 
 const containerStyle = {
   width: "800px",
@@ -18,7 +17,7 @@ const defaultCenter = {
 const DEFAULT_ZOOM = 13;
 
 function Map() {
-  const [map, setMap] = React.useState(null);
+  const [map, setMap] = useState<any>(null)
   const [center, setCenter] = useState(defaultCenter);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [showlocationMarker, setShowLocationMarker] = useState(false);
@@ -120,6 +119,7 @@ function Map() {
         options={{ streetViewControl: false }}
         onUnmount={onUnmount}
         onDrag={() => setShowLocationMarker(false)}
+        onZoomChanged={() => {setZoom(map.getZoom()); console.log(zoom)}}
       >
         { showlocationMarker ? <CustomMarker position={center} icon={""}></CustomMarker> : <></> }
         <IconButton
