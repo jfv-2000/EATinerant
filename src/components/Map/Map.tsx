@@ -55,7 +55,7 @@ export default function Map({
         };
         setCenter(currentLocation);
         setShowLocationMarker(true);
-        setZoom(19);
+        setZoom(18);
       });
     }
   }
@@ -96,7 +96,9 @@ export default function Map({
       options={{ streetViewControl: false }}
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
-      onDrag={() => setShowLocationMarker(false)}
+      onZoomChanged={() => {
+        map ? setZoom(map.getZoom()) : console.log("Map not yet loaded.")
+      }}
     >
       {showlocationMarker && (
         <CustomMarker
@@ -184,7 +186,7 @@ export default function Map({
         color: "blue",
       }}
     >
-      <Spinner size="xl" sx={{ width: "100px", height: "100px" }} />
+      <Spinner color="grey" size="xl" sx={{ width: "100px", height: "100px" }} />
     </Box>
   );
 }
