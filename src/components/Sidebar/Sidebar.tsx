@@ -86,7 +86,7 @@ export default function Sidebar({
             onChange={(e) => handleFilterChange(e, "type")}
           >
             <option value="all">All</option>
-            <option value="itinerant">Itinerant</option>
+            <option value="itinerant">Itinérant</option>
             <option value="foodBank">Help Centers</option>
           </Select>
         </Box>

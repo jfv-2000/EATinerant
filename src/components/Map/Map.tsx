@@ -116,7 +116,7 @@ export default function Map({
       onUnmount={onUnmount}
       onClick={(e) => showPopupAdd(e)}
       onZoomChanged={() => {
-        map ? setZoom(map.getZoom()) : console.log("Map not yet loaded.");
+        map && setZoom(map.getZoom());
       }}
     >
       {showlocationMarker && (

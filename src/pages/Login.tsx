@@ -1,4 +1,10 @@
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import Logo from "../components/Logo";
 
@@ -14,6 +20,13 @@ export default function Login({
     auth.signInWithPopup(provider);
   }
 
+  const isMobile = useBreakpointValue({
+    base: true,
+    sm: true,
+    md: false,
+    lg: false,
+    xl: false,
+  });
   return (
     <Box
       sx={{
@@ -24,19 +37,23 @@ export default function Login({
       }}
     >
       <Box className="login_pg_contents">
-        <Box className="logo_box">
-          <Flex>
-            <Logo size={150}></Logo>
-            <Heading
-              color={"#3182CE"}
-              className="title"
-              as={"h1"}
-              size={"4xl"}
-              margin={10}
-            >
-              EATinerant
-            </Heading>
-          </Flex>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: "center",
+          }}
+        >
+          <Logo size={150}></Logo>
+          <Heading
+            color={"#3182CE"}
+            className="title"
+            as={"h1"}
+            size={"4xl"}
+            margin={10}
+          >
+            EATinerant
+          </Heading>
         </Box>
 
         <Box
