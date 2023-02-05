@@ -2,3 +2,9 @@
   top: 5px !important;
   right: 5px !important;
 }
+
+.gm-style-iw,
+.gm-style-iw-c {
+  max-width: initial !important;
+  max-height: initial !important;
+}
