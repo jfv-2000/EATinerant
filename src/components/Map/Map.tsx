@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { IconButton } from "@chakra-ui/react";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import React, { useState } from "react";
 import { IoMdLocate } from "react-icons/io";
+import CustomMarker from "./CustomMarker";
+import { blueDot } from "./LocatorIcon";
 
 const containerStyle = {
   width: "800px",
@@ -13,9 +15,13 @@ const defaultCenter = {
   lng: -73.561668,
 };
 
+const DEFAULT_ZOOM = 13;
+
 function Map() {
   const [map, setMap] = React.useState(null);
   const [center, setCenter] = useState(defaultCenter);
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const [showlocationMarker, setShowLocationMarker] = useState(false);
 
   const onLoad = React.useCallback(function callback(map: any) {
     const customStyle = [
@@ -87,6 +93,8 @@ function Map() {
         console.log("nani");
         console.log("currentLocation: ", currentLocation);
         setCenter(currentLocation);
+        setShowLocationMarker(true);
+        setZoom(19);
       });
     } else {
       alert("Please allow use of geo-location in your browser settings.");
@@ -107,12 +115,13 @@ function Map() {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={13}
+        zoom={zoom}
         onLoad={onLoad}
         options={{ streetViewControl: false }}
         onUnmount={onUnmount}
+        onDrag={() => setShowLocationMarker(false)}
       >
-        {/* Child components, such as markers, info windows, etc. */}
+        { showlocationMarker ? <CustomMarker position={center} icon={""}></CustomMarker> : <></> }
         <IconButton
           aria-label="locate me"
           colorScheme={"blue"}
