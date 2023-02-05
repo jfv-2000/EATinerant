@@ -59,6 +59,24 @@ export default function Sidebar({
           <Divider className="option_divider" />
         </Box>
         <Box className="dropdown_option">
+          <Text>Gender</Text>
+          <Select
+            w="100px"
+            variant='unstyled'
+            disabled={filters.type === "foodBank"}
+            defaultValue={filters.gender}
+            size="sm"
+            onChange={(e) => handleFilterChange(e, "gender")}
+          >
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </Select>
+        </Box>
+        <Box className="divider_container">
+          <Divider className="option_divider" />
+        </Box>
+        <Box className="dropdown_option">
           <Text>Needs hygiene products</Text>
           <Select
             variant='unstyled'
@@ -95,7 +113,7 @@ export default function Sidebar({
           <Divider className="option_divider" />
         </Box>
         <Box className="dropdown_option">
-          <Text>Last fed</Text>
+          <Text>Last delivered</Text>
           <Select
             w="100px"
             variant='unstyled'
