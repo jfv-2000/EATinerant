@@ -17,9 +17,6 @@ export default function Map({
   const query = locationsCollection.limit(25);
   const [locations] = useCollectionData(query);
   const [pins, setPins] = useState(locations);
-  const [addLocationPopup, setAddLocationPopup] = useState(true);
-  const [lat, setLat] = useState(0.0);
-  const [long, setLong] = useState(0.0);
 
   useEffect(() => {
     setPins(locations);
@@ -57,7 +54,6 @@ export default function Map({
         updatedPins.push(pin);
       }
     });
-    console.log(updatedPins);
     setPins(updatedPins);
   }
   return (
@@ -72,11 +68,7 @@ export default function Map({
           auth={auth}
           updateFilters={(filters) => updateFilters(filters)}
         />
-        <CustomMap
-          locations={locations}
-          firebase={firebase}
-          firestore={firestore}
-        />
+        <CustomMap locations={pins} firebase={firebase} firestore={firestore} />
       </Box>
     )
   );
