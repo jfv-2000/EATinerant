@@ -25,7 +25,9 @@ export default function Map({
   function updateFilters(filters: any) {
     const updatedPins: any = [];
     locations?.map((pin) => {
-      if (pin.isPerson && (filters.type === "itinerant" || filters.type === "all")) {
+      if (!pin.isPerson && (filters.type === "foodBank" || filters.type === "all")) {
+        updatedPins.push(pin);
+      } else if (pin.isPerson && (filters.type === "itinerant" || filters.type === "all")) {
         if (
           filters.pet === "all" ||
           (filters.pet === "yes" && pin.hasPet) ||
@@ -37,9 +39,9 @@ export default function Map({
             (filters.needsHygiene === "no" && !pin.needsHygiene)
           ) {
             const lastDelivery = new Date(0);
-            lastDelivery.setUTCSeconds(pin.lastDelivery.seconds);
+            lastDelivery.setUTCSeconds(pin.lastDelivery?.seconds);
             const lastFedHourDifference =
-              new Date().getHours() - lastDelivery.getHours();
+              new Date().getHours() - (pin.lastDelivery ? lastDelivery.getHours() : 0);
             if (
               filters.lastFed === "all" ||
               (filters.lastFed === "twelve" && lastFedHourDifference > 12) ||
@@ -50,12 +52,9 @@ export default function Map({
             }
           }
         }
-      } else if (!pin.isPerson && (filters.type === "foodBank" || filters.type === "all")) {
-        updatedPins.push(pin);
       }
     });
     setPins(updatedPins);
-    console.log(pins)
   }
   return (
     auth.currentUser && (
