@@ -46,13 +46,13 @@ export default function Sidebar({
           <Select
             variant='unstyled'
             defaultValue={filters.type}
-            w="100px"
+            w="115px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "type")}
           >
             <option value="all">All</option>
             <option value="itinerant">Itinerant</option>
-            <option value="foodBank">Food Bank</option>
+            <option value="foodBank">Help Centers</option>
           </Select>
         </Box>
         <Box className="divider_container">
@@ -61,7 +61,7 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Gender</Text>
           <Select
-            w="100px"
+            w="115px"
             variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.gender}
@@ -83,7 +83,7 @@ export default function Sidebar({
             variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.needsHygiene}
-            w="100px"
+            w="115px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "needsHygiene")}
           >
@@ -101,7 +101,7 @@ export default function Sidebar({
             variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.pet}
-            w="100px"
+            w="115px"
             size="sm"
             onChange={(e) => handleFilterChange(e, "pet")}
           >
@@ -116,7 +116,7 @@ export default function Sidebar({
         <Box className="dropdown_option">
           <Text>Last delivered</Text>
           <Select
-            w="100px"
+            w="115px"
             variant='unstyled'
             disabled={filters.type === "foodBank"}
             defaultValue={filters.lastFed}
