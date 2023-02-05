@@ -4,6 +4,9 @@ import {
   Checkbox,
   Divider,
   Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
   Radio,
   RadioGroup,
   Stack,
@@ -13,6 +16,7 @@ import { GeoPoint } from "firebase/firestore";
 import { useState } from "react";
 import "./AddForm.scss";
 import { v4 as uuidv4 } from "uuid";
+import { AiOutlinePhone } from "react-icons/ai";
 
 const fontSize = "sm";
 const radioSize = "sm";
@@ -35,6 +39,7 @@ export default function AddForm({
   const [sexe, setSexe] = useState("M");
   const [hasPet, setHasPet] = useState(false);
   const [needsHygiene, setNeedsHygiene] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const closePopup = async (e: any) => {
     e.preventDefault();
@@ -93,6 +98,16 @@ export default function AddForm({
           isChecked={needsHygiene}
           onChange={(e) => setNeedsHygiene(e.target.checked)}
         />
+      </Box>
+      <Box className="row">
+        <Text fontSize={fontSize}>Female Hygiene Products</Text>
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<AiOutlinePhone color="gray.300" />}
+          />
+          <Input type="tel" placeholder="Phone number" />
+        </InputGroup>
       </Box>
       <Button
         size="xs"
