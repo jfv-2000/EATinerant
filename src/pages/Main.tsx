@@ -1,8 +1,23 @@
-import { Box } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  IconButton,
+  Input,
+  useBreakpointValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import CustomMap from "../components/Map/Map";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 
 export default function Map({
   firebase,
@@ -17,6 +32,14 @@ export default function Map({
   const query = locationsCollection.limit(25);
   const [locations] = useCollectionData(query);
   const [pins, setPins] = useState(locations);
+  const isMobile = useBreakpointValue({
+    base: true,
+    md: false,
+    lg: false,
+    xl: false,
+  });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
 
   useEffect(() => {
     setPins(locations);
@@ -71,10 +94,43 @@ export default function Map({
           display: "flex",
         }}
       >
-        <Sidebar
-          auth={auth}
-          updateFilters={(filters) => updateFilters(filters)}
-        />
+        {!isMobile ? (
+          <Sidebar
+            auth={auth}
+            updateFilters={(filters) => updateFilters(filters)}
+          />
+        ) : (
+          <>
+            <IconButton
+              sx={{
+                position: "absolute",
+                zIndex: 10,
+                top: "90vh",
+                left: "5vw",
+              }}
+              colorScheme="blue"
+              aria-label="Search database"
+              onClick={onOpen}
+              ref={btnRef as any}
+              icon={isOpen ? <BsChevronLeft /> : <BsChevronRight />}
+            />
+            <Drawer
+              isOpen={isOpen}
+              placement="left"
+              onClose={onClose}
+              initialFocusRef={btnRef as any}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <Sidebar
+                  auth={auth}
+                  updateFilters={(filters) => updateFilters(filters)}
+                  closeFunction={onClose}
+                />
+              </DrawerContent>
+            </Drawer>
+          </>
+        )}
         <CustomMap locations={pins} firebase={firebase} firestore={firestore} />
       </Box>
     )

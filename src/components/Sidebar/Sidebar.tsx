@@ -1,5 +1,15 @@
-import { Box, Button, Divider, Image, Select, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Image,
+  Select,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { RiFilter2Fill } from "react-icons/ri";
 import { initialFilters } from "../../assets/constants";
@@ -9,11 +19,19 @@ import "./Sidebar.scss";
 export default function Sidebar({
   auth,
   updateFilters,
+  closeFunction,
 }: {
   auth: any;
   updateFilters: (filters: any) => void;
+  closeFunction?: () => void;
 }) {
   const [filters, setFilters] = useState(initialFilters);
+  const isMobile = useBreakpointValue({
+    base: true,
+    md: false,
+    lg: false,
+    xl: false,
+  });
 
   function handleFilterChange(e: any, field: string) {
     const updatedFilters = { ...filters, [field]: e.target.value };
@@ -22,12 +40,29 @@ export default function Sidebar({
   }
 
   return (
-    <Box className="sidebar_container">
+    <Box
+      className="sidebar_container"
+      sx={{ width: isMobile ? "100%" : "38vw", height: "100%" }}
+    >
       <Box className="header_container">
-        <Image src={Logo} alt="Logo" className="logo_img" boxSize="50px" />
-        <Text className="app_name" fontSize="3xl" textShadow={"1px 1px #7BA0C2"}>
-          EATinérant
-        </Text>
+        <Box className="header">
+          <Image src={Logo} alt="Logo" className="logo_img" boxSize="50px" />
+          <Text
+            className="app_name"
+            fontSize="3xl"
+            textShadow={"1px 1px #7BA0C2"}
+          >
+            EATinérant
+          </Text>
+        </Box>
+        {closeFunction && (
+          <IconButton
+            colorScheme="blue"
+            aria-label="Search database"
+            onClick={closeFunction}
+            icon={<AiOutlineClose />}
+          />
+        )}
       </Box>
       <Box className="sidebar_section">
         <Box className="sidebar_section_title">

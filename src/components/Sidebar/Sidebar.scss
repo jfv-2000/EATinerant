@@ -1,6 +1,5 @@
 .sidebar_container {
   // border: 1px solid blue;
-  width: 38vw;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   display: flex;
   flex-direction: column;
@@ -9,12 +8,18 @@
 .sidebar_section {
   flex: auto;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .header_container {
   background-color: #a2d2ff;
   width: 100%;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
   padding: 0px 5px;
   height: 50px;
 }
