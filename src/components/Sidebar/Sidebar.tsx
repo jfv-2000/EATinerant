@@ -1,10 +1,11 @@
 import { Box, Button, Divider, Image, Select, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import "./Sidebar.scss";
-import Logo from "../../assets/logo.png";
-import { RiFilter2Fill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-import { initialFilters } from "../../assets/constants"
+import { RiFilter2Fill } from "react-icons/ri";
+import { initialFilters } from "../../assets/constants";
+import Logo from "../../assets/logo.png";
+import "./Sidebar.scss";
+
 export default function Sidebar({
   auth,
   updateFilters,
@@ -24,7 +25,7 @@ export default function Sidebar({
     <Box className="sidebar_container">
       <Box className="header_container">
         <Image src={Logo} alt="Logo" className="logo_img" boxSize="50px" />
-        <Text className="app_name" fontSize="3xl">
+        <Text className="app_name" fontSize="3xl" textShadow={"1px 1px #7BA0C2"}>
           EATinérant
         </Text>
       </Box>

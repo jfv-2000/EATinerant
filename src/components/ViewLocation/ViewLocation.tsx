@@ -31,6 +31,7 @@ export default function ViewLocation({
   firebase,
   firestore,
   setPopup,
+  id,
 }: {
   firebase: any;
   firestore: any;
@@ -39,33 +40,23 @@ export default function ViewLocation({
   const locationsCollection = firestore.collection("locations");
 
   const noLongerHere = async (e: any) => {
-    // e.preventDefault();
-    // await locationsCollection.add({
-    //   coordinates: new GeoPoint(lat, lng),
-    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    //   hasPet,
-    //   sexe,
-    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
-    //   isPerson: true,
-    //   needsHygiene,
-    //   id: uuidv4(),
-    // });
-    // setPopup();
+    e.preventDefault();
+    const toDelete = await locationsCollection.where("id", "==", id).get();
+    toDelete.forEach((location: any) => {
+      location.ref.delete();
+    });
+    setPopup();
   };
 
   const justDelivered = async (e: any) => {
-    // e.preventDefault();
-    // await locationsCollection.add({
-    //   coordinates: new GeoPoint(lat, lng),
-    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    //   hasPet,
-    //   sexe,
-    //   lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
-    //   isPerson: true,
-    //   needsHygiene,
-    //   id: uuidv4(),
-    // });
-    // setPopup();
+    e.preventDefault();
+    const toUpdate = await locationsCollection.where("id", "==", id).get();
+    toUpdate.forEach((location: any) => {
+      location.ref.update({
+        lastDelivery: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    });
+    setPopup();
   };
 
   return (
