@@ -10,10 +10,10 @@ import {
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import CustomMap from "../components/Map/Map";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, memo } from "react";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 
-export default function Map({
+function Map({
   firebase,
   firestore,
   auth,
@@ -40,7 +40,7 @@ export default function Map({
     setPins(locations);
   }, [locations]);
 
-  function updateFilters(filters: any) {
+  const updateFilters = useCallback((filters: any) => {
     const updatedPins: any = [];
     locations?.map((pin) => {
       if (
@@ -85,7 +85,55 @@ export default function Map({
       }
     });
     setPins(updatedPins);
-  }
+  }, []);
+
+  // function updateFilters(filters: any) {
+  //   const updatedPins: any = [];
+  //   locations?.map((pin) => {
+  //     if (
+  //       !pin.isPerson &&
+  //       (filters.type === "foodBank" || filters.type === "all")
+  //     ) {
+  //       updatedPins.push(pin);
+  //     } else if (
+  //       pin.isPerson &&
+  //       (filters.type === "itinerant" || filters.type === "all")
+  //     ) {
+  //       if (
+  //         filters.pet === "all" ||
+  //         (filters.pet === "yes" && pin.hasPet) ||
+  //         (filters.pet === "no" && !pin.hasPet)
+  //       ) {
+  //         if (
+  //           filters.needsHygiene === "all" ||
+  //           (filters.needsHygiene === "yes" && pin.needsHygiene) ||
+  //           (filters.needsHygiene === "no" && !pin.needsHygiene)
+  //         ) {
+  //           const lastFedHourDifference = pin.lastDelivery
+  //             ? (Date.now() / 1000 - pin.lastDelivery.seconds) / 3600
+  //             : 10000;
+  //           if (
+  //             filters.lastFed === "all" ||
+  //             (filters.lastFed === "twelve" && lastFedHourDifference > 12) ||
+  //             (filters.lastFed === "eight" && lastFedHourDifference > 8) ||
+  //             (filters.lastFed === "four" && lastFedHourDifference > 4)
+  //           ) {
+  //             if (
+  //               filters.gender === "all" ||
+  //               (filters.gender === "male" && pin.sexe === "M") ||
+  //               (filters.gender === "female" && pin.sexe === "F") ||
+  //               (filters.gender === "other" && pin.sexe === "A")
+  //             ) {
+  //               updatedPins.push(pin);
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+  //   setPins(updatedPins);
+  // }
+
   return (
     auth.currentUser && (
       <Box
@@ -136,3 +184,5 @@ export default function Map({
     )
   );
 }
+
+export default memo(Map);
