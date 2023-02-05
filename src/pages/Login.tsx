@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, useBreakpointValue } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import Logo from "../components/Logo";
 
