@@ -121,7 +121,14 @@ function Map() {
         onUnmount={onUnmount}
         onDrag={() => setShowLocationMarker(false)}
       >
-        { showlocationMarker ? <CustomMarker position={center} icon={""}></CustomMarker> : <></> }
+        {showlocationMarker ? <CustomMarker position={center} icon={{
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10,
+          fillOpacity: 1,
+          strokeWeight: 2,
+          fillColor: '#5384ED',
+          strokeColor: '#ffffff',
+        }}></CustomMarker> : <></>}
         <IconButton
           aria-label="locate me"
           colorScheme={"blue"}
