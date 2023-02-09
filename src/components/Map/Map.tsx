@@ -34,10 +34,12 @@ export default function Map({
   locations,
   firebase,
   firestore,
+  auth,
 }: {
   locations: any;
   firebase: any;
   firestore: any;
+  auth: any;
 }) {
   const [map, setMap] = React.useState<any | null>(null);
   const [center, setCenter] = useState(defaultCenter);
@@ -181,6 +183,7 @@ export default function Map({
               lat={lat}
               lng={long}
               setPopup={() => setPopup(null)}
+              auth={auth}
             />
           ) : (
             popup === "E" &&

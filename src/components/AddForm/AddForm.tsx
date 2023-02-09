@@ -21,12 +21,14 @@ const radioSize = "sm";
 export default function AddForm({
   firebase,
   firestore,
+  auth,
   lat,
   lng,
   setPopup,
 }: {
   firebase: any;
   firestore: any;
+  auth: any;
   lat: number;
   lng: number;
   setPopup: () => void;
@@ -50,6 +52,7 @@ export default function AddForm({
       needsHygiene,
       id: uuidv4(),
       phoneNumber,
+      user: auth.currentUser.uid
     });
     setPopup();
   };

@@ -132,7 +132,7 @@ function Map({
         ) : (
           <Sidebar auth={auth} filters={filters} setFilters={setFilters} />
         )}
-        <CustomMap locations={pins} firebase={firebase} firestore={firestore} />
+        <CustomMap locations={pins} firebase={firebase} firestore={firestore} auth={auth}/>
       </Box>
     )
   );
